@@ -13,9 +13,15 @@ export const loginUserApi = async (cretencial) => {
 
 
 export const hydreadUser = async () => {
+  const token = localStorage.getItem("accessToken");
+
   try {
-    let res = await api.get("/auth/me");
-    console.log(res.data);
+    const res = await api.get("/auth/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return res.data;
   } catch (error) {
     console.log(error);

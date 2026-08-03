@@ -9,14 +9,18 @@ import ProtectedRoute from './protected/ProtectedRoute'
 import Home from '../shared/ui/pages/Home'
 import { api } from '../config/axiosInstance'
 import { hydreadUser } from '../featores/auth/api/authApi'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../featores/auth/state/authReducer'
 
 const AppRoute = () => {
+  const dispatch=useDispatch()
 
     useEffect(()=>{
       (async()=>{
         try {
           let responce = await hydreadUser()
           console.log(responce);
+          dispatch(addUser(responce))
           
           
         } catch (error) {
