@@ -2,7 +2,7 @@ import { useNavigate } from "react-router"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import {useDispatch} from 'react-redux'
-import { addUser } from "../state/authReducer"
+import { addUser } from "../state/useAuth"
 import { loginUserApi } from "../api/authApi"
 
 export const useHooks = () => {
@@ -27,7 +27,14 @@ export const useHooks = () => {
     }
 
     const loginForm=async(data)=>{
-      console.log(data);
+     try {
+        let res=await loginUserApi(data)
+        dispatch(addUser(res))
+     } catch (error) {
+        console.log(error);
+        
+        
+     }
         
     }
 
