@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { useState } from "react"
 import {useDispatch} from 'react-redux'
 import { addUser } from "../state/authReducer"
+import { loginUserApi } from "../api/authApi"
 
 export const useAuth = () => {
 
@@ -21,24 +22,23 @@ export const useAuth = () => {
     } = useForm()
 
     const registerSubmit = (data) => {
-        let arr=[...registerUser,data]
-        setRegisterUser(arr)
-       localStorage.setItem('registerUser',JSON.stringify(arr))
-       navigate("/login")
-       alert("registration succefull")
+       console.log(data);
+       
     }
 
-    const loginFrom=(data)=>{
-       const user= registerUser.find((user)=>user.email===data.email && user.password===data.password)
-       console.log(user)
-       if(user){
-        localStorage.setItem("currentUser",JSON.stringify(user))
-        dispatch(addUser(user))
-        alert("login succes")
-        navigate('/')
-       }else{
-        alert("invalid cretencial")
-       }
+    const loginForm=async(data)=>{
+      try {
+     let responce=await loginUserApi(data)
+      console.log(responce);
+        dispatch(addUser(responce))
+      } catch (error) {
+        console.log(error);
+        
+        
+      }
+    
+      
+      
     }
 
 
@@ -49,6 +49,6 @@ export const useAuth = () => {
         watch,
         errors,
         registerSubmit,
-        loginFrom
+        loginForm
     }
 }

@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Login = () => {
   const users = useSelector((state) => state.auth.users);
 
-  const { register, handleSubmit, watch, loginForm, navigate } = useAuth()
+  const { register, handleSubmit,loginForm, navigate } = useAuth()
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -20,11 +20,11 @@ const Login = () => {
 
         <form className="space-y-4" onSubmit={handleSubmit(loginForm)}>
           <input
-            {...register("email", {
+            {...register("username", {
               required: "Email is required",
             })}
-            type="email"
-            placeholder="Email Address"
+            type="username"
+            placeholder="username"
             className="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
           />
 
