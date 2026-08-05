@@ -17,8 +17,6 @@ const developerSlice = createSlice({
   initialState,
 
   reducers: {
-    // ================= BOOKMARK =================
-
     bookmarkStartup: (state, action) => {
       const startup = action.payload;
 
@@ -44,8 +42,6 @@ const developerSlice = createSlice({
         JSON.stringify(state.bookMarks),
       );
     },
-
-    // ================= APPLY =================
 
     applyStartup: (state, action) => {
       const startup = {
@@ -76,8 +72,6 @@ const developerSlice = createSlice({
       );
     },
 
-    // ================= LIKE =================
-
     likeStartup: (state, action) => {
       const startup = action.payload;
 
@@ -104,16 +98,41 @@ const developerSlice = createSlice({
       );
     },
 
-    // ================= SEARCH =================
-
     setSearch: (state, action) => {
       state.search = action.payload;
     },
 
-    // ================= FILTER =================
-
     setFilter: (state, action) => {
       state.filter = action.payload;
+    },
+    acceptApplication: (state, action) => {
+      const application = state.applications.find(
+        (item) => item.id === action.payload,
+      );
+
+      if (application) {
+        application.status = "Accepted";
+      }
+
+      localStorage.setItem(
+        "developerApplication",
+        JSON.stringify(state.applications),
+      );
+    },
+
+    rejectApplication: (state, action) => {
+      const application = state.applications.find(
+        (item) => item.id === action.payload,
+      );
+
+      if (application) {
+        application.status = "Rejected";
+      }
+
+      localStorage.setItem(
+        "developerApplication",
+        JSON.stringify(state.applications),
+      );
     },
   },
 });
@@ -127,6 +146,8 @@ export const {
   unlikeStartup,
   setSearch,
   setFilter,
+  acceptApplication,
+  rejectApplication
 } = developerSlice.actions;
 
 export default developerSlice.reducer;

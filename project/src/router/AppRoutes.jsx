@@ -69,6 +69,10 @@ const AppRoutes = () => {
               path: "bookmarks",
               element: <Bookmarks />,
             },
+            {
+              path: "applications",
+              element: <FounderApplications />,
+            },
           ],
         },
         ,
@@ -79,19 +83,23 @@ const AppRoutes = () => {
             {
               index: true,
               element: <DevoloperHome />,
-            },{
-              path:"DeveloperExplore",
-              element:<DeveloperExplore/>
-            },{
-              path:"developerbookmarks",
-              element:<DeveloperBookmarks/>
-            },{
-              path:"developerapply/:id",
-              element:<DeveloperApply/>
-            },{
-              path:"applications",
-              element:<DeveloperApplications/>
-            }
+            },
+            {
+              path: "DeveloperExplore",
+              element: <DeveloperExplore />,
+            },
+            {
+              path: "developerbookmarks",
+              element: <DeveloperBookmarks />,
+            },
+            {
+              path: "developerapply/:id",
+              element: <DeveloperApply />,
+            },
+            {
+              path: "applications",
+              element: <DeveloperApplications />,
+            },
           ],
         },
       ],

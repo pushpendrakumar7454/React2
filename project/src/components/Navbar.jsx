@@ -7,6 +7,7 @@ import {
   FaBookmark,
   FaUserCircle,
   FaSignOutAlt,
+  FaFileAlt 
 } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "../features/auth/authSlice";
@@ -46,7 +47,7 @@ const Navbar = () => {
         <span className="absolute top-3 right-1/4 w-1 h-1 rounded-full bg-cyan-300"></span>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4">
+      <div className="relative max-w-7xl mx-auto px-2">
         <div className="h-20 flex items-center justify-between">
           {/* ================= LOGO ================= */}
 
@@ -69,7 +70,7 @@ const Navbar = () => {
                 StartupHub
               </h1>
 
-              <p className="uppercase tracking-[5px] text-[10px] text-slate-400">
+              <p className="uppercase  text-[10px] text-slate-400">
                 Build • Launch • Scale
               </p>
             </div>
@@ -77,7 +78,7 @@ const Navbar = () => {
 
           {/* ============ DESKTOP MENU ============ */}
 
-          <nav className="hidden lg:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-5">
             <NavLink to="/" className={navItem}>
               {({ isActive }) => (
                 <>
@@ -129,6 +130,21 @@ const Navbar = () => {
                   />
                 </>
               )}
+            </NavLink>
+            <NavLink
+              to="/applications"
+              className={({ isActive }) =>
+                `transition ${
+                  isActive
+                    ? "text-cyan-400"
+                    : "text-slate-300 hover:text-cyan-400"
+                }`
+              }
+            >
+              <div className="flex items-center gap-2">
+                <FaFileAlt />
+                Applications
+              </div>
             </NavLink>
           </nav>
 
