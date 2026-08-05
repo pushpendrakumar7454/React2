@@ -7,8 +7,27 @@ import ProtectedRoute from "./protected/ProtectedRoute";
 import Layout from "../app/layout/Layout";
 import Home from "../shared/Home";
 import About from "../shared/About";
+import { useDispatch } from "react-redux";
+import { hydredUser } from "../features/auth/api/authApi";
+import { addUser } from "../features/auth/state/authReducer";
 
 const AppRoutes = () => {
+
+     const dispatch=useDispatch()
+
+     useEffect(()=>{
+        (async()=>{
+          try {
+            let res= await hydredUser()
+            dispatch(addUser(res))
+          } catch (error) {
+            console.log(error);
+            
+            
+          }
+        })()
+     })
+
   const router = createBrowserRouter([
     {
       path: "/",
