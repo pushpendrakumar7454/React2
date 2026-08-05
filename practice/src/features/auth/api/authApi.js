@@ -3,9 +3,7 @@ import { axiosInstanceApi } from "../../../config/axiosInstance";
 export const loginUserApi = async (credentials) => {
   try {
     const res = await axiosInstanceApi.post("/auth/login", credentials);
-
     localStorage.setItem("accessToken", res.data.accessToken);
-
     return res.data;
   } catch (error) {
     console.log(error.response?.data || error);

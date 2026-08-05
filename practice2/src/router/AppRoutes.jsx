@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import PublicProtecteRoute from './public/PublicProtecteRoute'
-import Login from '../features/cart/ui/pages/Login'
-import Register from '../features/cart/ui/pages/Register'
+import Login from '../features/auth/ui/pages/Login'
+import Register from '../features/auth/ui/pages/Register'
 import ProtectedRoute from './protected/ProtectedRoute'
 import Layout from '../app/layout/Layout'
 import Home from '../shared/Home'
 import About from '../shared/About'
+import { useDispatch } from 'react-redux'
+import { hydredUserApi } from '../features/auth/api/authApi'
+import { addUser } from '../features/auth/state/authReduser'
 
 const AppRoutes = () => {
     
+
+
+
+   
+
+
     const router=createBrowserRouter([
         {
             path:"/",

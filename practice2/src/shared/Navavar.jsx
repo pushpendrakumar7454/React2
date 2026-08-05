@@ -1,32 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router'
 
-const Navavar = () => {
+const Navvar = () => {
     return (
-        <div className='flex justify-between bg-black text-white items-center p-4 text-xl'>
+        <div className='flex justify-between items-center bg-black text-white p-5 text-xl'>
             <div>
                 <h1>Lobo</h1>
             </div>
-            <div className='flex gap-4 items-center'>
-                <NavLink to="/main" end className={({isActive})=>isActive?"text-red-600 font-semibold":"text-white"}>Home</NavLink>
-                <NavLink to="/main/about" className={({isActive})=>isActive?"text-red-600 font-semibold":"text-white"}>About</NavLink>
-                <NavLink to="/main/products" className={({isActive})=>isActive?"text-red-600 font-semibold":"text-white"}>Products</NavLink>
+            <div className='flex gap-3'>
+                <NavLink to="/" className={({isActive})=>isActive?"text-red-600 font-semibold":""}>Home</NavLink>
+                <NavLink to="about" className={({isActive})=>isActive?"text-red-600 font-semibold":""} >About</NavLink>
+                <NavLink to="prodcuts" className={({isActive})=>isActive?"text-red-600 font-semibold":""}>Product</NavLink>
             </div>
-            <div className='flex gap-4 items-center'>
-                <div>
-                    <h1>Hey: <span className='text-yellow-600'>Arun</span></h1>
-                </div>
-                <div>
-                    <NavLink>Cart</NavLink>
-                </div>
-                <div>
-                    <NavLink>
-                        Logout
-                    </NavLink>
-                </div>
+            <div className='flex gap-5 items-center'>
+                <div>Hey: <span className='text-yellow-500'>Arun</span></div>
+               <NavLink>Cart</NavLink>
+               <NavLink>Logout</NavLink>
             </div>
         </div>
     )
 }
 
-export default Navavar
+export default Navvar
+
