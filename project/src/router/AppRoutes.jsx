@@ -21,6 +21,7 @@ import Bookmarks from "../pages/Bookmarks";
 import DevoloperHome from "../pages/DevoloperHome";
 import DevoloperLayout from "../layout/DevoloperLayout";
 import DeveloperExplore from "../components/DeveloperExplore";
+import DeveloperBookmarks from "../components/DeveloperBookmarks";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -79,6 +80,9 @@ const AppRoutes = () => {
             },{
               path:"DeveloperExplore",
               element:<DeveloperExplore/>
+            },{
+              path:"developerbookmarks",
+              element:<DeveloperBookmarks/>
             }
           ],
         },
