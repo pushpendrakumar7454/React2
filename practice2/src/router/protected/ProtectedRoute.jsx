@@ -1,7 +1,20 @@
 import React from 'react'
-import { Outlet } from 'react-router'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router'
 
 const ProtectedRoute = () => {
+   
+    const {user,isLoading}=useSelector((state)=>state.auth)
+    if(!user){
+        return <Navigate to="/login" replace/>
+    }
+     
+    if(isLoading){
+        return <h1>IsLoading</h1>
+    }
+
+
+
     return <Outlet/>
 }
 
