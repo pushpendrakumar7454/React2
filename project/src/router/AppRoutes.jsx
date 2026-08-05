@@ -24,6 +24,7 @@ import DeveloperExplore from "../components/DeveloperExplore";
 import DeveloperBookmarks from "../components/DeveloperBookmarks";
 import DeveloperApply from "../components/DeveloperApply";
 import DeveloperApplications from "../components/DeveloperApplications";
+import FounderApplications from "../components/FounderApplications";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ const AppRoutes = () => {
             },
             {
               path: "applications",
-              element: <FounderApplications />,
+              element: <FounderApplications/>,
             },
           ],
         },
