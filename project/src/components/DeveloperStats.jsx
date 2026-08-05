@@ -1,36 +1,42 @@
-import { FaRocket, FaBookmark, FaPaperPlane, FaHeart } from "react-icons/fa";
+import {
+  FaRocket,
+  FaBookmark,
+  FaPaperPlane,
+  FaHeart,
+} from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const DeveloperStats = () => {
+  // Founder ke total startups
   const startups = useSelector((state) => state.startup.startup);
 
-  const totalStartups = startups.length;
-  const bookmarked = startups.filter((item) => item.bookmarked).length;
-  const applied = startups.filter((item) => item.applied).length;
-  const liked = startups.filter((item) => item.liked).length;
+  // Developer Redux State
+  const { bookMarks, applications, likeStartups } = useSelector(
+    (state) => state.developer
+  );
 
   const stats = [
     {
       title: "Available Startups",
-      value: totalStartups,
+      value: startups.length,
       icon: <FaRocket />,
       color: "from-cyan-500 to-blue-500",
     },
     {
       title: "Bookmarks",
-      value: bookmarked,
+      value: bookMarks.length,
       icon: <FaBookmark />,
       color: "from-purple-500 to-pink-500",
     },
     {
       title: "Applied",
-      value: applied,
+      value: applications.length,
       icon: <FaPaperPlane />,
       color: "from-green-500 to-emerald-500",
     },
     {
       title: "Liked",
-      value: liked,
+      value: likeStartups.length,
       icon: <FaHeart />,
       color: "from-red-500 to-rose-500",
     },
@@ -44,12 +50,14 @@ const DeveloperStats = () => {
           className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl hover:-translate-y-2 transition-all duration-300"
         >
           <div
-            className={`h-10 w-10 rounded-2xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl text-white`}
+            className={`h-12 w-12 rounded-2xl bg-gradient-to-r ${item.color} flex items-center justify-center text-xl text-white`}
           >
             {item.icon}
           </div>
 
-          <h3 className="mt-5 text-slate-400">{item.title}</h3>
+          <h3 className="mt-5 text-slate-400 text-sm">
+            {item.title}
+          </h3>
 
           <h2 className="mt-2 text-4xl font-bold text-white">
             {item.value}

@@ -1,18 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+const currentUser = JSON.parse(localStorage.getItem("loggedinUser"));
+const email = currentUser?.email || "guest";
 const initialState = {
-  bookMarks: JSON.parse(localStorage.getItem("developerBooks")) || [],
-  applications: JSON.parse(localStorage.getItem("developerApplication")) || [],
-  likeStartups: JSON.parse(localStorage.getItem("developerLikes")) || [],
+  bookMarks: JSON.parse(localStorage.getItem(`developerBooks_${email}`)) || [],
+  applications:
+    JSON.parse(localStorage.getItem(`developerApplication_${email}`)) || [],
+  likeStartups:
+    JSON.parse(localStorage.getItem(`developerLikes_${email}`)) || [],
   search: "",
   filter: "All",
 };
 
 const developerSlice = createSlice({
   name: "developer",
+
   initialState,
 
   reducers: {
+    // ================= BOOKMARK =================
+
     bookmarkStartup: (state, action) => {
       const startup = action.payload;
 
@@ -22,7 +28,10 @@ const developerSlice = createSlice({
         state.bookMarks.push(startup);
       }
 
-      localStorage.setItem("developerBooks", JSON.stringify(state.bookMarks));
+      localStorage.setItem(
+        `developerBooks_${email}`,
+        JSON.stringify(state.bookMarks),
+      );
     },
 
     removeBookmark: (state, action) => {
@@ -30,7 +39,10 @@ const developerSlice = createSlice({
         (item) => item.id !== action.payload,
       );
 
-      localStorage.setItem("developerBooks", JSON.stringify(state.bookMarks));
+      localStorage.setItem(
+        `developerBooks_${email}`,
+        JSON.stringify(state.bookMarks),
+      );
     },
 
     // ================= APPLY =================
@@ -48,7 +60,7 @@ const developerSlice = createSlice({
       }
 
       localStorage.setItem(
-        "developerApplication",
+        `developerApplication_${email}`,
         JSON.stringify(state.applications),
       );
     },
@@ -59,7 +71,7 @@ const developerSlice = createSlice({
       );
 
       localStorage.setItem(
-        "developerApplication",
+        `developerApplication_${email}`,
         JSON.stringify(state.applications),
       );
     },
@@ -76,7 +88,7 @@ const developerSlice = createSlice({
       }
 
       localStorage.setItem(
-        "developerLikes",
+        `developerLikes_${email}`,
         JSON.stringify(state.likeStartups),
       );
     },
@@ -87,14 +99,18 @@ const developerSlice = createSlice({
       );
 
       localStorage.setItem(
-        "developerLikes",
+        `developerLikes_${email}`,
         JSON.stringify(state.likeStartups),
       );
     },
 
+    // ================= SEARCH =================
+
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+
+    // ================= FILTER =================
 
     setFilter: (state, action) => {
       state.filter = action.payload;

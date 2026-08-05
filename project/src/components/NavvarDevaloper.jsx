@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router";
 import {
   FaCode,
@@ -10,7 +10,9 @@ import {
   FaSearch,
   FaBell,
   FaEnvelope,
-  FaTimes 
+  FaTimes ,
+    FaBars
+
 
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +21,9 @@ import { removeUser } from "../features/auth/authSlice";
 const NavvarDevaloper = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  
+
+const [open, setOpen] = useState(false);
 
   const logoutHandler = () => {
     localStorage.removeItem("loggedinUser");
@@ -33,6 +38,7 @@ const NavvarDevaloper = () => {
 
         <NavLink
           to="/developer"
+          
           className="flex items-center gap-3"
         >
           <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-500 to-indigo-600">
@@ -56,6 +62,7 @@ const NavvarDevaloper = () => {
 
           <NavLink
             to="/developer"
+            end
             className={({ isActive }) =>
               `transition ${
                 isActive
@@ -68,7 +75,8 @@ const NavvarDevaloper = () => {
           </NavLink>
 
           <NavLink
-            to="/"
+            to="/developer/DeveloperExplore"
+
             className={({ isActive }) =>
               `transition ${
                 isActive
@@ -158,7 +166,7 @@ const NavvarDevaloper = () => {
           {/* Logout */}
 
           <button
-            
+            onClick={logoutHandler}
             className="rounded-xl bg-red-500/20 p-3 text-red-400 transition hover:bg-red-500 hover:text-white"
           >
             <FaSignOutAlt />

@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import { createBrowserRouter, RouterProvider, useSearchParams } from "react-router";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useSearchParams,
+} from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../layout/Layout";
@@ -14,15 +18,12 @@ import CreateStartup from "../pages/CreateStartup";
 import StartupDetails from "../components/StartupDetails";
 import MyStartups from "../components/MyStartups";
 import Bookmarks from "../pages/Bookmarks";
-import DevoloperHome from '../pages/DevoloperHome'
+import DevoloperHome from "../pages/DevoloperHome";
 import DevoloperLayout from "../layout/DevoloperLayout";
+import DeveloperExplore from "../components/DeveloperExplore";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
-
-
-
-
 
   useEffect(() => {
     const loggedInUser =
@@ -60,22 +61,27 @@ const AppRoutes = () => {
             {
               path: "edit-startup/:id",
               element: <CreateStartup />,
-            }, {
+            },
+            {
               path: "bookmarks",
-              element: <Bookmarks />
+              element: <Bookmarks />,
+            },
+          ],
+        },
+        ,
+        {
+          path: "/developer",
+          element: <DevoloperLayout />,
+          children: [
+            {
+              index: true,
+              element: <DevoloperHome />,
+            },{
+              path:"DeveloperExplore",
+              element:<DeveloperExplore/>
             }
           ],
         },
-        ,{
-             path:"/developer",
-             element:<DevoloperLayout/>,
-             children:[
-              {
-                index:true,
-                element:<DevoloperHome/>
-              }
-             ]
-            }
       ],
     },
     {
