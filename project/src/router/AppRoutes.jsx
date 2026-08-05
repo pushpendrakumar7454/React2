@@ -22,6 +22,7 @@ import DevoloperHome from "../pages/DevoloperHome";
 import DevoloperLayout from "../layout/DevoloperLayout";
 import DeveloperExplore from "../components/DeveloperExplore";
 import DeveloperBookmarks from "../components/DeveloperBookmarks";
+import DeveloperApply from "../components/DeveloperApply";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -83,6 +84,9 @@ const AppRoutes = () => {
             },{
               path:"developerbookmarks",
               element:<DeveloperBookmarks/>
+            },{
+              path:"developerapply/:id",
+              element:<DeveloperApply/>
             }
           ],
         },

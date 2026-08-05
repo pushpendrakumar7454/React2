@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 import StartupCard from "./StartupCard";
+import DeveloperStartupCart from "./DeveloperStartupCart";
 
 const RecommendedStartups = () => {
   const startups = useSelector((state) => state.startup.startup);
@@ -25,7 +26,7 @@ const RecommendedStartups = () => {
 
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
         {recommended.map((startup) => (
-          <StartupCard key={startup.id} startup={startup} />
+          <DeveloperStartupCart key={startup.id} startup={startup} />
         ))}
       </div>
     </section>

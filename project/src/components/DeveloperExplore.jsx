@@ -13,9 +13,11 @@ import {
   FaUser,
   FaSearch,
 } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const DeveloperExplore = () => {
   const dispatch = useDispatch();
+  const navigate=useNavigate()
 
   const startups = useSelector((state) => state.startup.startup);
 
@@ -152,7 +154,7 @@ const DeveloperExplore = () => {
               </button>
 
               <button
-                onClick={() => dispatch(applyStartup(startup))}
+                onClick={() => navigate(`/developer/developerapply/${startup.id}`)}
                 className="rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-500 px-6 py-3 text-white font-semibold hover:scale-105 transition"
               >
                 Apply
