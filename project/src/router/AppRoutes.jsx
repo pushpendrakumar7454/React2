@@ -23,6 +23,7 @@ import DevoloperLayout from "../layout/DevoloperLayout";
 import DeveloperExplore from "../components/DeveloperExplore";
 import DeveloperBookmarks from "../components/DeveloperBookmarks";
 import DeveloperApply from "../components/DeveloperApply";
+import DeveloperApplications from "../components/DeveloperApplications";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -87,6 +88,9 @@ const AppRoutes = () => {
             },{
               path:"developerapply/:id",
               element:<DeveloperApply/>
+            },{
+              path:"applications",
+              element:<DeveloperApplications/>
             }
           ],
         },

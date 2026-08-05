@@ -108,7 +108,7 @@ const [open, setOpen] = useState(false);
           </NavLink>
 
           <NavLink
-            to="/applications"
+            to="/developer/applications"
             className={({ isActive }) =>
               `transition ${
                 isActive
