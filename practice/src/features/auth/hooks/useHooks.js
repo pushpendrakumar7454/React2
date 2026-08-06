@@ -4,6 +4,7 @@ import { useState } from "react"
 import {useDispatch} from 'react-redux'
 import { addUser } from "../state/useAuth"
 import { loginUserApi } from "../api/authApi"
+import { userLoginAction } from "../state/authAction"
 
 export const useHooks = () => {
 
@@ -26,15 +27,8 @@ export const useHooks = () => {
        
     }
 
-    const loginForm=async(data)=>{
-     try {
-        let res=await loginUserApi(data)
-        dispatch(addUser(res))
-     } catch (error) {
-        console.log(error);
-        
-        
-     }
+    const loginForm=(data)=>{
+     dispatch(userLoginAction(data))
         
     }
 

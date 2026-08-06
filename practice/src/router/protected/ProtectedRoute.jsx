@@ -1,8 +1,19 @@
-import React from 'react'
-import { Outlet } from 'react-router'
+import React from "react";
+import { Outlet, Navigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
-    return <Outlet/>
-}
+  const { user, isLoading } = useSelector((state) => state.auth);
 
-export default ProtectedRoute
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (!user) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <Outlet />;
+};
+
+export default ProtectedRoute;

@@ -1,8 +1,19 @@
-import React from 'react'
-import { Outlet } from 'react-router'
+import React from "react";
+import { Outlet, Navigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const PublicRoute = () => {
-    return <Outlet/>
-}
+  const { user, isLoading } = useSelector((state) => state.auth);
 
-export default PublicRoute
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (user) {
+    return <Navigate to="/main" replace />;
+  }
+
+  return <Outlet />;
+};
+
+export default PublicRoute;

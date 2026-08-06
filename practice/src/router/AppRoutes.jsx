@@ -52,9 +52,6 @@ const AppRoutes = () => {
             children:[{
                 path:"",
                 element:<Layout/>
-            },{
-                path:"",
-                element:<Home/>
             }
         ]
         }
