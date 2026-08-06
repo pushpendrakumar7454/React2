@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginUserapi } from "../api/authApi";
 import { addUser } from "../state/authReducer";
+import { userLoginAction } from "../state/authAction";
+
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -15,10 +17,10 @@ export const useAuth = () => {
   } = useForm();
   const dispatch = useDispatch();
 
-  const loginForm = async (data) => {
+  const loginForm =(data) => {
     try {
-      let res = await loginUserapi(data);
-      dispatch(addUser(res));
+       dispatch(userLoginAction(data))
+      
     } catch (error) {
       console.log(error);
     }
