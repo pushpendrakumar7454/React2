@@ -11,6 +11,8 @@ import { useDispatch } from "react-redux";
 import { hydredUser } from "../features/auth/api/authApi";
 import { addUser } from "../features/auth/state/authReducer";
 import { hreadUserAction } from "../features/auth/state/authAction";
+import ProductCart from "../features/products/ui/pages/ProductCart";
+
 
 const AppRoutes = () => {
 
@@ -52,7 +54,10 @@ const AppRoutes = () => {
             {
               path: "about",
               element: <About />,
-            },
+            },{
+              path:"product",
+              element:<ProductCart/>
+            }
           ],
         },
       ],
