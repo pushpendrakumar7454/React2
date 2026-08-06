@@ -10,7 +10,26 @@ export const userLoginAction = createAsyncThunk(
       localStorage.setItem("accessToken", res.data.accessToken);
       return res.data;
     } catch (error) {
-       return thunkapi.rejectWithValue("login failed")
+      return thunkapi.rejectWithValue("login failed");
+    }
+  },
+);
+
+export const hreadUserAction = createAsyncThunk(
+  "hyredUser",
+  async (_, thunkapi) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      let res = await apiInstance.get("/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(res.data);
+
+      return res.data;
+    } catch (error) {
+       return thunkapi.rejectWithValue("login faild")
     }
   },
 );

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLoginAction } from "./authAction";
+import { hreadUserAction, userLoginAction } from "./authAction";
 
 export const authSlice = createSlice({
   name: "auth",
@@ -23,16 +23,32 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(userLoginAction.pending, (state, action) => {
-        state.isLoading=true
+         state.isLoading=true
       })
-      .addCase(userLoginAction.fulfilled,(state,action)=>{
-        state.user=action.payload
+      .addCase(userLoginAction.fulfilled, (state, action) => { 
+         state.user=action.payload
+        state.isLoading=false
+        state.isAuthenticated=true
+
+
+      })
+      .addCase(userLoginAction.rejected, (state, action) => {
+               state.isLoading=false
+      })
+      .addCase(hreadUserAction.pending, (state, action) => {
+        state.isLoading=true
+      
+
+      })
+      .addCase(hreadUserAction.fulfilled, (state, action) => {
+          state.user=action.payload
         state.isLoading=false
         state.isAuthenticated=true
 
       })
-      .addCase(userLoginAction.rejected,(state,action)=>{
+      .addCase(hreadUserAction.rejected, (state, action) => {
         state.isLoading=false
+
       });
   },
 });
