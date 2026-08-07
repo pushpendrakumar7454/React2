@@ -1,34 +1,30 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import ProductCart from "./components/ProductCart";
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import React, { useState } from 'react'
+import { apiInstance } from './api/api'
+import ProductCart from './components/ProductCart'
 
-const App = () => {
-  const [products, setproducts] = useState([]);
-  const [page, setPage] = useState(0);
-  let limit = 10;
+const TanStack = () => {
 
-  const getData = async () => {
-    try {
-      let res = await axios.get(
-        `https://dummyjson.com/products?limit=${limit}&skip=${limit * page}`,
-      );
-      setproducts(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  let totalPages = Math.ceil(products.total / limit);
 
-  useEffect(() => {
-    getData();
-  }, [page]);
+   const [page, setPage] = useState(0)
+   let limit=10
 
-  return (
+    const {data,isPending,error,isPlaceholderData}=useQuery({
+        queryKey:['products',page],
+        queryFn:()=>apiInstance(limit,page),
+        placeholderData:keepPreviousData
+    })
+    if(isPending) return <h1>Pending</h1>
+
+    const totalPages=Math.ceil(data.total/limit)
+    return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6">Products</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products?.products?.map((product) => (
+      <div
+         style={{opacity: isPlaceholderData?0.3:1}}
+       className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {data?.products?.map((product) => (
           <ProductCart key={product.id} product={product} />
         ))}
       </div>
@@ -53,6 +49,6 @@ const App = () => {
       </div>
     </div>
   );
-};
+}
 
-export default App;
+export default TanStack
