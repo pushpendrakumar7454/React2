@@ -2,6 +2,10 @@ import React from "react";
 import { Star, ShoppingCart } from "lucide-react";
 
 const ProductPage = ({ product }) => {
+    
+
+    
+
   return (
     <div>
     <div className="group h-98 bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-200">
