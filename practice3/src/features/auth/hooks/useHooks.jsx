@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginUserApi } from "../api/authApi";
 import { addUser } from "../state/useAuth";
+import { loginUserAction } from "../state/authAction";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -20,16 +21,7 @@ export const useAuth = () => {
   };
 
   const loginForm = async(data) => {
-   try {
-    let res= await loginUserApi(data)
-    dispatch(addUser(res))
-    alert("login succes")
-    navigate("/main")
-    
-   } catch (error) {
-    console.log(error);
-    
-   }
+       dispatch(loginUserAction(data))
   };
 
   return {

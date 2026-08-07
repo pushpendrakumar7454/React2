@@ -11,6 +11,7 @@ import Product from "../shared/ui/pages/Product";
 import { hydredUser } from "../features/auth/api/authApi";
 import { useDispatch } from "react-redux";
 import { addUser } from "../features/auth/state/useAuth";
+import { hydredUseraction } from "../features/auth/state/authAction";
 
 const AppRoutes = () => {
 
@@ -18,14 +19,8 @@ const AppRoutes = () => {
 const dispatch=useDispatch()
 
     useEffect(()=>{
-     (async()=>{
-       try {
-        let res= await hydredUser()
-           dispatch(addUser(res))
-       } catch (error) {
-        console.log(error);
-        
-       }
+     (()=>{
+       dispatch(hydredUseraction())
      })()
     },[])
 
