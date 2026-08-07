@@ -8,8 +8,17 @@ const authSlice=createSlice({
         isLoading:false
     },
     reducers:{
-        addUser:()=>{},
-        removeUser:()=>{}
+        addUser:(state,action)=>{
+                 state.user=action.payload
+                 state.isAuthenticated=true
+                 state.isLoading=false
+        },
+        removeUser:(state,action)=>{
+            state.user=null
+            state.isAuthenticated=false
+            state.isLoading=true
+
+        }
     }
 })
 export const {addUser,removeUser}=authSlice.actions

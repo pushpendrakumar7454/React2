@@ -1,26 +1,44 @@
-import { useForm } from "react-hook-form"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router"
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { loginUserApi } from "../api/authApi";
+import { addUser } from "../state/useAuth";
 
+export const useAuth = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm();
 
-export const useAuth=()=>{
+  const registerForm = (data) => {
+    console.log(data);
+  };
+
+  const loginForm = async(data) => {
+   try {
+    let res= await loginUserApi(data)
+    dispatch(addUser(res))
+    alert("login succes")
+    navigate("/main")
     
-    const navigate=useNavigate()
-    const dispatch=useDispatch()
-    const {register,handleSubmit,formState:{errors},watch,reset}=useForm()
+   } catch (error) {
+    console.log(error);
+    
+   }
+  };
 
-
-    const registerForm=(data)=>{
-        console.log(data);
-        
-    }
-
-    const loginForm=(data)=>{
-        console.log(data);
-        
-    }
-
-    return {
-        register,handleSubmit,loginForm,registerForm,watch,navigate,dispatch
-    }
-}
+  return {
+    register,
+    handleSubmit,
+    loginForm,
+    registerForm,
+    watch,
+    navigate,
+    dispatch,
+  };
+};

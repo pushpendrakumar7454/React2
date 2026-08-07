@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import PublicProtected from "./public/PublicProtected";
 import Login from "../features/auth/ui/pages/Login";
@@ -8,8 +8,28 @@ import Layout from "../app/layout/Layout";
 import Home from "../shared/ui/pages/Home";
 import About from "../shared/ui/pages/About";
 import Product from "../shared/ui/pages/Product";
+import { hydredUser } from "../features/auth/api/authApi";
+import { useDispatch } from "react-redux";
+import { addUser } from "../features/auth/state/useAuth";
 
 const AppRoutes = () => {
+
+
+const dispatch=useDispatch()
+
+    useEffect(()=>{
+     (async()=>{
+       try {
+        let res= await hydredUser()
+           dispatch(addUser(res))
+       } catch (error) {
+        console.log(error);
+        
+       }
+     })()
+    },[])
+
+
   const router = createBrowserRouter([
     {
       path: "/",
