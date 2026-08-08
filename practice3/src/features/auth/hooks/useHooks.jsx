@@ -22,6 +22,8 @@ export const useAuth = () => {
 
   const loginForm = async(data) => {
        dispatch(loginUserAction(data))
+       navigate('/main')
+       alert("login succes")
   };
 
   return {
