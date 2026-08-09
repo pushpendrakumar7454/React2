@@ -5,6 +5,6 @@ import App from './App.jsx'
 import AppRoutes from './router/AppRoutes.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <AppRoutes/>
+    <App/>
   
 )
