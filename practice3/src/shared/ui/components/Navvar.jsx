@@ -17,7 +17,7 @@ const Navvar = () => {
                 <NavLink to="product" className={({isActive})=>isActive?"text-red-600 font-semibold":""}>Product</NavLink>
             </div>
             <div className='flex gap-8 items-center'>
-                <div>Hey: <span className='text-yellow-500 capitalize'>{user.username}</span></div>
+                <div>Hey: <span className='text-yellow-500 capitalize'>{user?.username || "Guest"}</span></div>
                <NavLink>Cart</NavLink>
                <NavLink className={"bg-red-600 text-white px-3 py-1 rounded cursor-pointer active:scale-95"}>Logout</NavLink>
             </div>
