@@ -2,7 +2,7 @@
 import React from "react";
 import { getCategory } from "../hooks/productapi";
 
-const ProductFilter = ({ category, setCategory}) => {
+const ProductFilter = ({ category, setCategory,search,setSearch}) => {
   const { data, isPending, error } = getCategory();
 
   if (isPending) {
@@ -18,6 +18,8 @@ const ProductFilter = ({ category, setCategory}) => {
       {/* Search */}
       <div className="w-full">
         <input
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
           type="text"
           placeholder="Search Product..."
           className="w-full px-4 py-3 border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500"

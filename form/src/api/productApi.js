@@ -2,7 +2,7 @@ import { apiInstance } from "../config/apiInstance";
 
 export const getAllProrductApi = async() => {
     try {
-        const res = await apiInstance("/products");
+        const res = await apiInstance("/products/search?q=phone");
         return res.data;
     } catch (error) {
         console.log(error);

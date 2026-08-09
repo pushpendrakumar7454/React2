@@ -3,12 +3,13 @@ import { getAllCategory, getAllProrductApi, seacrhProductbyCategory } from "../a
 import { useState } from "react";
 
 export const getProducts = () => {
+    const [search, setSearch] = useState("")
     const { data, isPending, error } = useQuery({
-        queryKey: ["products"],
-        queryFn: getAllProrductApi,
+        queryKey: ["products", search],
+        queryFn: () => getAllProrductApi(search)
     });
 
-    return { data, isPending, error };
+    return { data, isPending, error, search, setSearch };
 };
 
 export const getCategory = () => {
