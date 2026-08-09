@@ -1,12 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllCategory, getAllProrductApi, seacrhProductbyCategory } from "../api/productApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+
 
 export const getProducts = () => {
     const [search, setSearch] = useState("")
+    const [debouncing, setDebouncing] = useState(null)
+
+    useEffect(() => {
+        let timeout = setTimeout(() => {
+            setDebouncing(search)
+        }, 1000)
+        return () => clearTimeout(timeout)
+    }, [search])
     const { data, isPending, error } = useQuery({
-        queryKey: ["products", search],
-        queryFn: () => getAllProrductApi(search)
+        queryKey: ["products", debouncing],
+        queryFn: () => getAllProrductApi(debouncing)
     });
 
     return { data, isPending, error, search, setSearch };

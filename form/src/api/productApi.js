@@ -1,8 +1,9 @@
 import { apiInstance } from "../config/apiInstance";
 
-export const getAllProrductApi = async() => {
+export const getAllProrductApi = async(search) => {
+    let url = search ? `/products/search?q=${search}` : `/products/`;
     try {
-        const res = await apiInstance("/products/search?q=phone");
+        const res = await apiInstance(url);
         return res.data;
     } catch (error) {
         console.log(error);
