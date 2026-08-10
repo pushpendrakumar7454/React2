@@ -4,7 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import AppRoutes from './router/AppRoutes.jsx'
 
+
 createRoot(document.getElementById('root')).render(
-    <App/>
+    <AppRoutes/>
   
 )
