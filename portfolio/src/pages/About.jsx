@@ -96,8 +96,7 @@ const About = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0a0a0a] px-6 py-24 text-white"
-    >
+      className="bg-[#0a0a0a] px-6 py-24 text-white" >
       <div className="mx-auto max-w-6xl">
 
         {/* Top */}
