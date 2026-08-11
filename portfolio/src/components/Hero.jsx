@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
@@ -80,38 +81,54 @@ const Hero = () => {
           {/* Main Card */}
           <div
             ref={(el) => (cardsRef.current[1] = el)}
-            className="floating-card relative z-20 h-[360px] w-[280px] rotate-2 rounded-[2rem] border border-white/10 bg-[#111111] p-7 shadow-2xl md:h-[420px] md:w-[330px]"
+            className="floating-card relative z-20 h-[360px] w-[280px] rotate-2 overflow-hidden rounded-[2rem] border border-white/10 bg-[#111111] shadow-2xl md:h-[420px] md:w-[330px]"
           >
-            <div className="flex items-center justify-between">
-              <span className="text-xs uppercase tracking-widest text-gray-500">
+
+            {/* Full Image */}
+            <img
+              src="src/photo/push1.jpeg"
+              alt="Pushpendra"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/40" />
+
+            {/* Top Content */}
+            <div className="relative z-10 flex items-center justify-between p-7">
+              <span className="text-xs uppercase tracking-widest text-gray-300">
                 Portfolio
               </span>
 
               <span className="h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.8)]" />
             </div>
 
-            <div className="mt-20">
-              <p className="text-sm text-gray-500">Hello, I'm</p>
+            {/* Text Over Image */}
+            <div className="absolute bottom-24 left-7 z-10">
+              <p className="text-sm text-gray-300">
+                Hello, I'm
+              </p>
 
               <h2 className="mt-2 text-4xl font-bold text-white">
                 Pushpendra
                 <span className="text-cyan-400">.</span>
               </h2>
 
-              <p className="mt-3 text-gray-400">
+              <p className="mt-3 text-gray-200">
                 Frontend Developer
               </p>
             </div>
 
-            <div className="absolute bottom-7 left-7 right-7 flex justify-between border-t border-white/10 pt-5">
+            {/* Bottom Stats */}
+            <div className="absolute bottom-0 left-0 right-0 z-10 flex justify-between border-t border-white/20 bg-black/30 px-7 py-5 backdrop-blur-sm">
               <div>
                 <p className="text-2xl font-bold text-white">06+</p>
-                <p className="text-xs text-gray-500">Projects</p>
+                <p className="text-xs text-gray-300">Projects</p>
               </div>
 
               <div>
                 <p className="text-2xl font-bold text-white">React</p>
-                <p className="text-xs text-gray-500">Main Stack</p>
+                <p className="text-xs text-gray-300">Main Stack</p>
               </div>
             </div>
           </div>
@@ -146,10 +163,12 @@ const Hero = () => {
             <p className="text-3xl font-black text-cyan-400">
               01
             </p>
+
             <p className="text-xs uppercase tracking-widest text-gray-500">
               Developer
             </p>
           </div>
+
         </div>
       </div>
     </section>
@@ -157,3 +176,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
