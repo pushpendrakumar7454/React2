@@ -98,7 +98,7 @@ const Navbar = () => {
               onClick={() => setMenuOpen(false)}
               className="group relative text-xl font-bold tracking-tight text-white sm:text-2xl"
             >
-              Pushpendra
+              PortFolio
               <span className="text-cyan-400">.</span>
 
               <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full" />
