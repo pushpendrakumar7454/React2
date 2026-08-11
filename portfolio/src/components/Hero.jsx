@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import push1 from '../../public/push1.jpeg'
 
 const Hero = () => {
   const heroRef = useRef(null);
@@ -90,7 +91,7 @@ const Hero = () => {
 
             {/* Full Image */}
             <img
-              src="src/photo/push1.jpeg"
+              src={push1}
               alt="Pushpendra"
               className="absolute inset-0 h-full w-full object-cover"
             />
