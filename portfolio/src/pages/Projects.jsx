@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -36,7 +37,6 @@ const Projects = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading
       gsap.from(".projects-heading", {
         y: 60,
         opacity: 0,
@@ -48,7 +48,6 @@ const Projects = () => {
         },
       });
 
-      // Cards
       gsap.from(".project-card", {
         y: 80,
         opacity: 0,
@@ -61,9 +60,9 @@ const Projects = () => {
         },
       });
 
-      // Project visual
       gsap.from(".project-visual", {
         scale: 0.85,
+        opacity: 0,
         duration: 1,
         stagger: 0.18,
         ease: "power3.out",
@@ -80,20 +79,16 @@ const Projects = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0a0a0a] text-white px-6 py-24"
+      className="bg-[#0a0a0a] px-4 py-16 text-white sm:px-6 sm:py-20 md:py-24"
     >
-      <div className="max-w-6xl mx-auto">
-
-        {/* Heading */}
-        <div className="projects-heading mb-14">
-
-          <p className="text-xs uppercase tracking-[0.35em] text-cyan-400">
+      <div className="mx-auto max-w-6xl">
+        <div className="projects-heading mb-12 sm:mb-14">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 sm:text-xs sm:tracking-[0.35em]">
             04 / Projects
           </p>
 
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mt-4">
-
-            <h2 className="text-5xl md:text-6xl font-bold">
+          <div className="mt-4 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <h2 className="text-4xl font-bold sm:text-5xl md:text-6xl">
               MY <span className="text-gray-600">PROJECTS.</span>
             </h2>
 
@@ -101,103 +96,74 @@ const Projects = () => {
               A few projects where I applied what I've learned
               and experimented with new ideas.
             </p>
-
           </div>
         </div>
 
-        {/* Project List */}
-        <div className="project-list space-y-6">
-
+        <div className="project-list space-y-8 sm:space-y-10">
           {projects.map((project) => (
             <div
               key={project.number}
-              className="project-card group grid md:grid-cols-[1fr_1.1fr] gap-8
-              border-t border-white/10 pt-6"
+              className="project-card group grid grid-cols-1 gap-7 border-t border-white/10 pt-6 md:grid-cols-[1fr_1.1fr] md:gap-8"
             >
-
-              {/* Info */}
               <div className="flex flex-col justify-center">
-
-                <div className="flex items-center gap-4">
-                  <span className="text-xs text-gray-600">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <span className="text-[10px] text-gray-600 sm:text-xs">
                     {project.number}
                   </span>
 
-                  <span className="text-xs text-cyan-400 uppercase tracking-wider">
+                  <span className="text-[10px] uppercase tracking-wider text-cyan-400 sm:text-xs">
                     Project
                   </span>
                 </div>
 
-                <h3 className="mt-4 text-3xl md:text-4xl font-bold
-                  group-hover:text-cyan-400 transition-colors duration-300">
+                <h3 className="mt-3 text-2xl font-bold transition-colors duration-300 group-hover:text-cyan-400 sm:mt-4 sm:text-3xl md:text-4xl">
                   {project.title}
                 </h3>
 
-                <p className="mt-3 text-xs text-gray-500">
+                <p className="mt-2 text-xs text-gray-500 sm:mt-3">
                   {project.tech}
                 </p>
 
-                <p className="mt-4 max-w-md text-sm leading-6 text-gray-500">
+                <p className="mt-3 max-w-md text-sm leading-6 text-gray-500 sm:mt-4">
                   {project.description}
                 </p>
 
                 <button
-                  className="mt-6 w-fit text-sm text-gray-400
-                  border-b border-gray-700 pb-1
-                  hover:text-cyan-400 hover:border-cyan-400
-                  transition-colors duration-300"
+                  className="mt-5 w-fit border-b border-gray-700 pb-1 text-sm text-gray-400 transition-colors duration-300 hover:border-cyan-400 hover:text-cyan-400 sm:mt-6"
                 >
                   View Project ↗
                 </button>
-
               </div>
 
-              {/* Visual */}
               <div
-                className="project-visual relative h-64 md:h-72
-                rounded-2xl overflow-hidden
-                border border-white/10 bg-[#141414]"
+                className="project-visual relative h-52 overflow-hidden rounded-2xl border border-white/10 bg-[#141414] sm:h-60 md:h-72"
               >
-
                 <div className="absolute inset-0 flex items-center justify-center">
-
                   <div className="text-center">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-gray-600">
+                    <p className="text-[9px] uppercase tracking-[0.35em] text-gray-600 sm:text-[10px] sm:tracking-[0.4em]">
                       {project.number}
                     </p>
 
-                    <h4 className="mt-2 text-4xl md:text-5xl font-black
-                      group-hover:scale-105 transition-transform duration-500">
+                    <h4 className="mt-2 text-3xl font-black transition-transform duration-500 group-hover:scale-105 sm:text-4xl md:text-5xl">
                       {project.visual}
                       <span className="text-cyan-400">.</span>
                     </h4>
                   </div>
-
                 </div>
 
-                {/* Simple Glow */}
-                <div
-                  className="absolute -right-16 -top-16
-                  h-48 w-48 rounded-full
-                  bg-cyan-400/10 blur-3xl
-                  group-hover:scale-150
-                  transition-transform duration-700"
-                />
+                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl transition-transform duration-700 group-hover:scale-150 sm:h-48 sm:w-48" />
 
-                <span className="absolute bottom-4 right-5 text-xs text-gray-600">
+                <span className="absolute bottom-3 right-4 text-[10px] text-gray-600 sm:bottom-4 sm:right-5 sm:text-xs">
                   {project.number} / 03
                 </span>
-
               </div>
-
             </div>
           ))}
-
         </div>
-
       </div>
     </section>
   );
 };
 
 export default Projects;
+

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -55,7 +56,6 @@ const About = () => {
         );
     }, sectionRef);
 
-    // Skill hover
     const skills = gsap.utils.toArray(".about-skill");
 
     skills.forEach((skill) => {
@@ -96,29 +96,24 @@ const About = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0a0a0a] px-6 py-24 text-white" >
+      className="bg-[#0a0a0a] px-4 py-16 text-white sm:px-6 sm:py-20 md:py-24"
+    >
       <div className="mx-auto max-w-6xl">
-
-        {/* Top */}
-        <div className="about-top flex items-center gap-4">
-          <span className="text-sm text-gray-600">
+        <div className="about-top flex items-center gap-3 sm:gap-4">
+          <span className="text-xs text-gray-600 sm:text-sm">
             02
           </span>
 
-          <span className="h-px w-10 bg-white/20" />
+          <span className="h-px w-7 bg-white/20 sm:w-10" />
 
-          <p className="text-xs uppercase tracking-[0.3em] text-cyan-400">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-400 sm:text-xs sm:tracking-[0.3em]">
             About Me
           </p>
         </div>
 
-        {/* Content */}
-        <div className="mt-12 grid gap-14 md:grid-cols-[1.3fr_0.7fr]">
-
-          {/* Left */}
+        <div className="mt-10 grid gap-12 sm:mt-12 sm:gap-14 md:grid-cols-[1.3fr_0.7fr]">
           <div>
-
-            <h2 className="about-heading max-w-3xl text-4xl font-bold leading-tight md:text-6xl">
+            <h2 className="about-heading max-w-3xl text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">
               I build{" "}
               <span className="text-gray-600">
                 modern
@@ -126,7 +121,7 @@ const About = () => {
               and interactive web experiences.
             </h2>
 
-            <div className="about-description mt-7 max-w-2xl space-y-4 text-sm leading-7 text-gray-500 md:text-base">
+            <div className="about-description mt-6 max-w-2xl space-y-4 text-sm leading-6 text-gray-500 sm:mt-7 sm:text-base sm:leading-7">
               <p>
                 I'm a frontend developer who enjoys turning ideas
                 into clean, responsive and interactive interfaces.
@@ -142,61 +137,85 @@ const About = () => {
                 My Journey →
               </button>
             </div>
-
           </div>
 
-          {/* Right */}
           <div>
-
-            <p className="mb-5 text-xs uppercase tracking-[0.3em] text-gray-600">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.25em] text-gray-600 sm:mb-5 sm:text-xs sm:tracking-[0.3em]">
               Technologies
             </p>
 
             <div className="border-t border-white/10">
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  01
+                </span>
 
-              <div className="about-skill flex cursor-pointer items-center justify-between border-b border-white/10 py-4">
-                <span className="text-xs text-gray-600">01</span>
-                <span className="skill-name text-sm text-gray-400">
+                <span className="skill-name flex-1 text-sm text-gray-400">
                   React.js
                 </span>
-                <span className="skill-arrow text-gray-600">↗</span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
               </div>
 
-              <div className="about-skill flex cursor-pointer items-center justify-between border-b border-white/10 py-4">
-                <span className="text-xs text-gray-600">02</span>
-                <span className="skill-name text-sm text-gray-400">
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  02
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
                   JavaScript
                 </span>
-                <span className="skill-arrow text-gray-600">↗</span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
               </div>
 
-              <div className="about-skill flex cursor-pointer items-center justify-between border-b border-white/10 py-4">
-                <span className="text-xs text-gray-600">03</span>
-                <span className="skill-name text-sm text-gray-400">
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  03
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
                   Tailwind CSS
                 </span>
-                <span className="skill-arrow text-gray-600">↗</span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
               </div>
 
-              <div className="about-skill flex cursor-pointer items-center justify-between border-b border-white/10 py-4">
-                <span className="text-xs text-gray-600">04</span>
-                <span className="skill-name text-sm text-gray-400">
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  04
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
                   GSAP
                 </span>
-                <span className="skill-arrow text-gray-600">↗</span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
               </div>
 
-              <div className="about-skill flex cursor-pointer items-center justify-between border-b border-white/10 py-4">
-                <span className="text-xs text-gray-600">05</span>
-                <span className="skill-name text-sm text-gray-400">
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  05
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
                   Git & GitHub
                 </span>
-                <span className="skill-arrow text-gray-600">↗</span>
-              </div>
 
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

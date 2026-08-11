@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -51,64 +52,50 @@ const Skills = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0a0a0a] text-white px-6 py-24"
+      className="bg-[#0a0a0a] px-4 py-16 text-white sm:px-6 sm:py-20 md:py-24"
     >
-      <div className="max-w-6xl mx-auto">
-
-        {/* Heading */}
-        <div className="skills-heading mb-12">
-
-          <p className="text-sm uppercase tracking-[0.3em] text-cyan-400">
+      <div className="mx-auto max-w-6xl">
+        <div className="skills-heading mb-10 sm:mb-12">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-400 sm:text-xs sm:tracking-[0.3em]">
             03 / Skills
           </p>
 
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mt-4">
-
-            <h2 className="text-5xl md:text-6xl font-bold">
+          <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-5">
+            <h2 className="text-4xl font-bold sm:text-5xl md:text-6xl">
               My <span className="text-gray-600">Stack.</span>
             </h2>
 
-            <p className="text-sm text-gray-500 max-w-sm leading-6">
+            <p className="max-w-sm text-sm leading-6 text-gray-500">
               Technologies I use to build responsive and modern
               web applications.
             </p>
-
           </div>
         </div>
 
-        {/* Skills */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-
+        <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:gap-4 md:grid-cols-4">
           {skills.map((skill, index) => (
             <div
               key={skill}
-              className="skill-card group border border-white/10 rounded-xl p-5
-              hover:border-cyan-400/50 transition-colors duration-300"
+              className="skill-card group rounded-xl border border-white/10 p-4 transition-colors duration-300 hover:border-cyan-400/50 sm:p-5"
             >
               <div className="flex items-center justify-between">
-
-                <span className="text-xs text-gray-600">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
                   0{index + 1}
                 </span>
 
-                <span className="text-gray-600 group-hover:text-cyan-400
-                  group-hover:translate-x-1 group-hover:-translate-y-1
-                  transition-all duration-300">
+                <span
+                  className="text-gray-600 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-cyan-400"
+                >
                   ↗
                 </span>
-
               </div>
 
-              <h3 className="mt-8 text-xl font-medium
-                group-hover:text-cyan-400 transition-colors duration-300">
+              <h3 className="mt-6 text-base font-medium transition-colors duration-300 group-hover:text-cyan-400 sm:mt-8 sm:text-xl">
                 {skill}
               </h3>
-
             </div>
           ))}
-
         </div>
-
       </div>
     </section>
   );
