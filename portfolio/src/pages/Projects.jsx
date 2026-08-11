@@ -16,6 +16,7 @@ const Projects = () => {
       description:
         "A platform where startups, developers and investors can connect and build ideas together.",
       visual: "STARTUP",
+      link: "https://react2-fkgz.vercel.app/",
     },
     {
       number: "02",
@@ -24,14 +25,25 @@ const Projects = () => {
       description:
         "A product application with search, filtering, categories and dynamic API data.",
       visual: "STORE",
+      link: "https://rococo-blini-0a7f33.netlify.app/",
     },
     {
       number: "03",
-      title: "Creative UI",
-      tech: "React · GSAP · Tailwind",
+      title: "Productivity Dashboard",
+      tech: "JavaScript · HTML · CSS",
       description:
         "An interactive interface focused on smooth motion and modern user experience.",
       visual: "CREATIVE",
+      link: "https://dom-in-js-3wtq.vercel.app/",
+    },
+    {
+      number: "04",
+      title: "Fintrack Pro-Personal Tracker",
+      tech: "JavaScript · HTML · CSS",
+      description:
+        "An interactive interface focused on smooth motion and modern user experience.",
+      visual: "FINTRACK",
+      link: "https://starlit-cassata-7751fd.netlify.app/",
     },
   ];
 
@@ -82,6 +94,8 @@ const Projects = () => {
       className="bg-[#0a0a0a] px-4 py-16 text-white sm:px-6 sm:py-20 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
+
+        {/* Heading */}
         <div className="projects-heading mb-12 sm:mb-14">
           <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 sm:text-xs sm:tracking-[0.35em]">
             04 / Projects
@@ -99,13 +113,17 @@ const Projects = () => {
           </div>
         </div>
 
+        {/* Project List */}
         <div className="project-list space-y-8 sm:space-y-10">
           {projects.map((project) => (
             <div
               key={project.number}
               className="project-card group grid grid-cols-1 gap-7 border-t border-white/10 pt-6 md:grid-cols-[1fr_1.1fr] md:gap-8"
             >
+
+              {/* Left Content */}
               <div className="flex flex-col justify-center">
+
                 <div className="flex items-center gap-3 sm:gap-4">
                   <span className="text-[10px] text-gray-600 sm:text-xs">
                     {project.number}
@@ -128,18 +146,23 @@ const Projects = () => {
                   {project.description}
                 </p>
 
-                <button
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-5 w-fit border-b border-gray-700 pb-1 text-sm text-gray-400 transition-colors duration-300 hover:border-cyan-400 hover:text-cyan-400 sm:mt-6"
                 >
                   View Project ↗
-                </button>
+                </a>
+
               </div>
 
-              <div
-                className="project-visual relative h-52 overflow-hidden rounded-2xl border border-white/10 bg-[#141414] sm:h-60 md:h-72"
-              >
+              {/* Right Visual */}
+              <div className="project-visual relative h-52 overflow-hidden rounded-2xl border border-white/10 bg-[#141414] sm:h-60 md:h-72">
+
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
+
                     <p className="text-[9px] uppercase tracking-[0.35em] text-gray-600 sm:text-[10px] sm:tracking-[0.4em]">
                       {project.number}
                     </p>
@@ -148,22 +171,28 @@ const Projects = () => {
                       {project.visual}
                       <span className="text-cyan-400">.</span>
                     </h4>
+
                   </div>
                 </div>
 
                 <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl transition-transform duration-700 group-hover:scale-150 sm:h-48 sm:w-48" />
 
                 <span className="absolute bottom-3 right-4 text-[10px] text-gray-600 sm:bottom-4 sm:right-5 sm:text-xs">
-                  {project.number} / 03
+                  {project.number} / 04
                 </span>
+
               </div>
+
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
 };
 
 export default Projects;
+
+
 

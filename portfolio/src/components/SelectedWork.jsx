@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -79,6 +78,7 @@ const SelectedWork = () => {
           </p>
         </div>
 
+        {/* PROJECT 01 */}
         <div className="project-card border-t border-white/10 py-10 sm:py-12">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-10">
             <div className="project-content">
@@ -93,11 +93,26 @@ const SelectedWork = () => {
               <p className="mt-4 max-w-md text-sm leading-6 text-gray-500 sm:mt-5 sm:text-base sm:leading-7">
                 A platform where startups, developers and investors
                 can connect and build ideas together.
+                <br/>
+                 <a
+                href="https://react2-fkgz.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" inline-block leading-1 text-sm text-red-600 hover:text-green-700 transition hover:text-cyan-400 sm:mt-6"
+              >
+                View Project →
+              </a>
+
               </p>
 
-              <button className="mt-5 text-sm transition hover:text-cyan-400 sm:mt-6">
+              <a
+                href="https://your-startuphub-link.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-block text-sm transition hover:text-cyan-400 sm:mt-6"
+              >
                 View Project →
-              </button>
+              </a>
             </div>
 
             <div className="project-image group flex h-56 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#151515] sm:h-64 md:h-72">
@@ -114,12 +129,14 @@ const SelectedWork = () => {
           </div>
         </div>
 
+        {/* PROJECT 02 */}
         <div className="project-card border-t border-white/10 py-10 sm:py-12">
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-10">
             <div className="project-image group flex h-56 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-[#151515] sm:h-64 md:h-72 md:order-1">
               <div className="text-center transition-transform duration-500 group-hover:scale-110">
                 <p className="text-[10px] uppercase tracking-[0.25em] text-gray-600 sm:text-xs sm:tracking-[0.3em]">
-                  Project 02
+                  Project 02 <br/>
+                  
                 </p>
 
                 <h4 className="mt-2 text-4xl font-bold sm:mt-3 sm:text-5xl">
@@ -139,12 +156,19 @@ const SelectedWork = () => {
 
               <p className="mt-4 max-w-md text-sm leading-6 text-gray-500 sm:mt-5 sm:text-base sm:leading-7">
                 A responsive product application with search,
-                filtering and category based products.
-              </p>
-
-              <button className="mt-5 text-sm transition hover:text-cyan-400 sm:mt-6">
+                filtering and category based products.<br/>
+                 <a
+                href="https://rococo-blini-0a7f33.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" inline-block leading-1 text-sm text-red-600 hover:text-green-700 transition hover:text-cyan-400 sm:mt-6"
+              >
                 View Project →
-              </button>
+              </a>
+
+              </p>
+              
+             
             </div>
           </div>
         </div>

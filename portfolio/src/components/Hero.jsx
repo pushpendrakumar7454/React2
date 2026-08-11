@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import push1 from '../../public/push1.jpeg'
+import { NavLink } from "react-router";
 
 const Hero = () => {
   const heroRef = useRef(null);
@@ -75,9 +76,9 @@ const Hero = () => {
             meets creative interaction and motion.
           </p>
 
-          <button className="mt-7 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-105 sm:mt-8 sm:px-7 sm:text-base">
+          <NavLink to="project"  className="mt-7 rounded-full bg-cyan-400 px-6 py-3 text-sm font-medium text-black transition duration-300 hover:scale-105 sm:mt-8 sm:px-7 sm:text-base">
             Explore My Work →
-          </button>
+          </NavLink>
         </div>
 
         {/* RIGHT */}
