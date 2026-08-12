@@ -6,6 +6,7 @@ import About from "../pages/About";
 import Skills from "../pages/Skills";
 import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
+import NotFound from "../components/NotFound";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([{
@@ -27,8 +28,13 @@ const AppRoutes = () => {
         },{
           path:"contact",
           element:<Contact/>
-        }
+      }, 
     ]
+  },{
+    
+          path: "*",
+          element: <NotFound/>
+        
   }
    
   ]);

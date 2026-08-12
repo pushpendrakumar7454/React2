@@ -58,7 +58,7 @@ const Contact = () => {
                 href="mailto:yourmail@gmail.com"
                 className="mt-2 inline-block break-all text-base transition hover:text-cyan-400 sm:text-lg"
               >
-                yourmail@gmail.com
+                pushpendrakumar7454981358@gmail.com
               </a>
             </div>
 

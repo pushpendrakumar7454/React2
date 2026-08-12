@@ -214,6 +214,45 @@ const About = () => {
                   ↗
                 </span>
               </div>
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  06
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
+                Redux toolkit
+                </span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
+              </div>
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  07
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
+                  typeScript
+                </span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
+              </div>
+              <div className="about-skill flex cursor-pointer items-center justify-between gap-3 border-b border-white/10 py-4">
+                <span className="text-[10px] text-gray-600 sm:text-xs">
+                  08
+                </span>
+
+                <span className="skill-name flex-1 text-sm text-gray-400">
+                  python,Django
+                </span>
+
+                <span className="skill-arrow text-gray-600">
+                  ↗
+                </span>
+              </div>
             </div>
           </div>
         </div>
