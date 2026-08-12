@@ -196,7 +196,7 @@ const Navbar = () => {
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="rounded-full border border-cyan-400/60 px-5 py-2.5 text-sm font-medium text-cyan-400 transition-all duration-300 hover:bg-cyan-400 hover:text-black"
+            className="hidden rounded-full border border-cyan-400/60 px-5 py-2.5 text-sm font-medium text-cyan-400 transition-all duration-300 hover:bg-cyan-400 hover:text-black lg:block"
           >
             Resume ↗
           </a>
