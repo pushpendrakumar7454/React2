@@ -98,7 +98,7 @@ const Projects = () => {
         {/* Heading */}
         <div className="projects-heading mb-12 sm:mb-14">
           <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 sm:text-xs sm:tracking-[0.35em]">
-            04 / Projects
+            Projects
           </p>
 
           <div className="mt-4 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
