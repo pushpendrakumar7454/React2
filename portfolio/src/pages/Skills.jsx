@@ -12,11 +12,13 @@ const Skills = () => {
     "HTML",
     "CSS",
     "JavaScript",
+    "TypeScript",
     "React",
     "Tailwind CSS",
     "Redux",
     "Python",
     "Django",
+    "GSAP"
   ];
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const Skills = () => {
       <div className="mx-auto max-w-6xl">
         <div className="skills-heading mb-10 sm:mb-12">
           <p className="text-[10px] uppercase tracking-[0.25em] text-cyan-400 sm:text-xs sm:tracking-[0.3em]">
-            03 / Skills
+             Skills
           </p>
 
           <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-5">
