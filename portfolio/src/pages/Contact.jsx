@@ -34,7 +34,7 @@ const Contact = () => {
       <div className="mx-auto max-w-5xl">
         <div className="contact-content mb-10 sm:mb-12">
           <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-400 sm:text-xs sm:tracking-[0.35em]">
-            05 / Contact
+            Contact
           </p>
 
           <h2 className="mt-3 text-4xl font-bold sm:mt-4 sm:text-5xl md:text-6xl">
