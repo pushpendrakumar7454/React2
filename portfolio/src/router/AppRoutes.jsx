@@ -7,6 +7,7 @@ import Skills from "../pages/Skills";
 import Projects from "../pages/Projects";
 import Contact from "../pages/Contact";
 import NotFound from "../components/NotFound";
+import Education from "../pages/Education";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([{
@@ -28,7 +29,10 @@ const AppRoutes = () => {
         },{
           path:"contact",
           element:<Contact/>
-      }, 
+      }, {
+        path:"/education",
+        element:<Education/>
+      }
     ]
   },{
     
