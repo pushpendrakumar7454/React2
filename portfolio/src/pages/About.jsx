@@ -100,9 +100,7 @@ const About = () => {
     >
       <div className="mx-auto max-w-6xl">
         <div className="about-top flex items-center gap-3 sm:gap-4">
-          <span className="text-xs text-gray-600 sm:text-sm">
-            02
-          </span>
+          
 
           <span className="h-px w-7 bg-white/20 sm:w-10" />
 
