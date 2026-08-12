@@ -274,6 +274,21 @@ const Navbar = () => {
                 >
                   Skills
                 </NavLink>
+                  <NavLink
+                   onClick={() => setMenuOpen(false)}
+                 to="/education"
+
+                className={({ isActive }) =>
+                  `group relative text-sm font-medium transition-colors duration-300 ${
+                    isActive
+                      ? "text-cyan-400"
+                      : "text-gray-400 hover:text-white"
+                  }`
+                }
+              >
+                Education
+                <span className="absolute -bottom-2 left-0 h-[1px] w-full origin-left scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100" />
+              </NavLink>
 
                 <NavLink
                   to="/project"
