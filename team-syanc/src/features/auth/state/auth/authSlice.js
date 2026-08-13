@@ -3,19 +3,19 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: null,
+        employee: null,
         isLoading: false
     },
     reducers: {
-        adduser: (state, action) => {
+        addEmloyee: (state, action) => {
             state.user = action.payload
             state.isLoading = false
         },
-        removeUser: (state) => {
+        removeEmployee: (state) => {
             state.user = null
-            state.isLoading = true
+            state.isLoading = false
         }
     }
 })
-export const { adduser, removeUser } = authSlice.actions
+export const { addEmloyee, removeEmployee } = authSlice.actions
 export default authSlice.reducer
