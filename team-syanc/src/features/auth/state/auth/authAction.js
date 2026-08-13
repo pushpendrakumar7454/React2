@@ -3,7 +3,7 @@ import { apiInstance } from "../../../../config/apiInstance";
 
 export const loginEmployee = createAsyncThunk('auth/login', async(credecial, thunkapi) => {
     try {
-        const res = await apiInstance.post("/auth/login")
+        const res = await apiInstance.post("/auth/login", credecial)
         return res.data
 
     } catch (error) {
