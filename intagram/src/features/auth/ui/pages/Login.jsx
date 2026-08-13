@@ -1,5 +1,6 @@
 import React from "react";
 import { FaFacebook } from "react-icons/fa";
+import { useAuth } from "../../hooks/useAuth";
 
 const InstagramLogo = () => {
   return (
@@ -63,6 +64,9 @@ const InstagramLogo = () => {
 };
 
 const Login = () => {
+
+  const{register,handleSubmit,loginUserForm,navigate}= useAuth()
+
   return (
     <div className="min-h-screen w-full bg-white">
 
@@ -229,12 +233,15 @@ const Login = () => {
               Log into Instagram
             </h2>
 
-            <form>
+            <form onSubmit={handleSubmit(loginUserForm)}>
 
               {/* Username */}
               <input
-                type="text"
-                placeholder="Mobile number, username or email"
+              {...register("email",{
+                required:"email is requried"
+              })}
+                type="email"
+                placeholder="email"
                 className="
                   w-full
                   h-[60px]
@@ -252,6 +259,9 @@ const Login = () => {
 
               {/* Password */}
               <input
+              {...register("password",{
+                required:"password is required"
+              })}
                 type="password"
                 placeholder="Password"
                 className="
@@ -323,9 +333,12 @@ const Login = () => {
 
               {/* Create Account */}
               <button
+                onClick={()=>navigate("/register")}
                 type="button"
                 className="
                   w-full
+                  active:scale-95
+                  cursor-pointer
                   h-[44px]
                   mt-3
                   rounded-[22px]

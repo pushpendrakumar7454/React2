@@ -18,10 +18,10 @@ export const useAuth = () => {
     const registerUserForm = (data) => {
         const arr = [...registerUser, data]
         localStorage.setItem("registerUser", JSON.stringify(arr))
-        dispatch(addUser(arr))
         setRegisterUser(arr)
+        navigate('/login')
         toast.success("registration succesfully")
-        navigate("login")
+
 
     }
 
@@ -33,7 +33,8 @@ export const useAuth = () => {
             localStorage.setItem("authenticatedUser", JSON.stringify(existUser))
             dispatch(addUser(existUser))
             toast.success("login succefully")
-            navigate("/")
+            navigate('/')
+
         } else {
             toast.error("login failed")
         }

@@ -1,43 +1,89 @@
-import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router'
-import Layout from '../app/layout/Layout'
-import ProtectedRouter from './protected/ProtectedRouter'
-import Navvar from '../shared/ui/components/Navvar'
-import Home from '../shared/ui/pages/Home'
-import PublicProtected from './public/PublicProtected'
-import Login from '../features/auth/ui/pages/Login'
-import Register from '../features/auth/ui/pages/Register'
+import React, { useEffect } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useNavigate,
+} from "react-router";
+import { useDispatch } from "react-redux";
 
+import Layout from "../app/layout/Layout";
+import ProtectedRouter from "./protected/ProtectedRouter";
+import Navvar from "../shared/ui/components/Navvar";
+import Home from "../shared/ui/pages/Home";
+import PublicProtected from "./public/PublicProtected";
+import Login from "../features/auth/ui/pages/Login";
+import Register from "../features/auth/ui/pages/Register";
+
+import { addUser } from "../features/auth/state/authUser";
+
+
+
+const AuthHydrate = () => {
+  const dispatch = useDispatch();
+  const hydredUser=()=>{
+    const user = localStorage.getItem("authenticatedUser");
+    if (!user) return;
+
+    try {
+      const loggedUser = JSON.parse(user);
+      dispatch(addUser(loggedUser));
+    } catch (error) {
+      console.log("Invalid user data:", error);
+      localStorage.removeItem("authenticatedUser");
+    }
+  }
+
+  useEffect(() => {
+    hydredUser()
+  }, []);
+
+  return <Outlet />;
+};
+
+
+// -------------------------
+// App Routes
+// -------------------------
 const AppRoutes = () => {
 
-
-    let router=createBrowserRouter([
+  const router = createBrowserRouter([
+    {
+      element: <AuthHydrate />,
+      children: [
         {
-          path:"",
-          element:<ProtectedRouter/>,
-          children:[
+          element: <ProtectedRouter />,
+          children: [
             {
-                path:"",
-                element:<Navvar/>,
-                children:[{
-                    path:"",
-                    element:<Home/>
-                }]
-            }
-          ]
-        },{
-            element:<PublicProtected/>,
-            children:[{
-                path:"/login",
-                element:<Login/>
-            },{
-                path:"/register",
-                element:<Register/>
-            }]
-        }
-    ])
+              element: <Navvar />,
+              children: [
+                {
+                  path: "/",
+                  element: <Home />,
+                },
+              ],
+            },
+          ],
+        },
 
-  return <RouterProvider router={router}/>
-}
+        {
+          element: <PublicProtected />,
+          children: [
+            {
+              path: "/login",
+              element: <Login />,
+            },
+            {
+              path: "/register",
+              element: <Register />,
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
-export default AppRoutes
+  return <RouterProvider router={router} />;
+};
+
+export default AppRoutes;
