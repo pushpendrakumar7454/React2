@@ -6,7 +6,7 @@ import { useAuth } from "../../hooks/useAuth";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const {loginSubmit,register,errors,handleSubmit}=useAuth()
+  const {loginSubmit,register,navigate,handleSubmit}=useAuth()
 
 
   return (
@@ -91,7 +91,7 @@ const Login = () => {
               required:"this is required"
             })}
               type="email"
-              placeholder="Enter your email"
+              placeholder="email here..."
               className="w-full h-[45px] rounded-[7px] bg-[#f1f2ff] px-4 text-[13px] text-gray-900 outline-none border-2 border-transparent focus:border-purple-500 transition placeholder:text-gray-400"
             />
 
@@ -174,8 +174,9 @@ const Login = () => {
           <p className="text-[11px] text-gray-500">
             Don't have an account?{" "}
             <button
+            onClick={()=>navigate("/register")}
               type="button"
-              className="text-gray-300 hover:text-purple-400 font-semibold transition"
+              className="text-gray-300 active:scale-95 cursor-pointer hover:text-purple-400 font-semibold transition"
             >
               Sign Up
             </button>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import PublicProtectedRoute from './PublicProtected/PublicProtectedRoute'
 import Login from '../features/auth/ui/pages/Login'
@@ -8,8 +8,16 @@ import AuthLayout from '../app/layout/AuthLayout'
 import Homee from '../shared/ui/pages/Homee'
 import DashboardLayout from '../app/layout/DashboardLayout'
 import Home from '../features/dashboard/ui/pages/Home'
+import { useDispatch } from 'react-redux'
+
+import { currentLoggedEmployee } from '../features/auth/state/auth/authAction'
 
 const AppRoutes = () => {
+const dispatch=useDispatch()
+
+useEffect(() => {
+    dispatch(currentLoggedEmployee());
+}, [dispatch]);
 
     const router=createBrowserRouter([
         {
@@ -33,7 +41,7 @@ const AppRoutes = () => {
            
         },{
             path:'/main',
-            element:<PublicProtectedRoute/>,
+            element:<ProtectedRoute/>,
             children:[
                 {
                     path:"",
