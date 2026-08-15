@@ -6,9 +6,11 @@ import {
     MessageSquare,
     Settings,
     Plus,
+    ChartArea,
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { toggleTheme } from "../../../../shared/state/themeSlice";
+import NavigationTab from "./NavigationTab";
 
 const AsidNavvar = () => {
 
@@ -34,98 +36,7 @@ const AsidNavvar = () => {
 
 
             {/* ================= NAVIGATION ================= */}
-            <nav className="mt-7 flex flex-col">
-
-                {/* Dashboard */}
-                <div className="group relative flex h-10 cursor-pointer items-center gap-3 bg-[var(--surface-container)] px-5 text-[var(--primary)]">
-
-                    <span className="absolute right-0 top-0 h-full w-[2px] bg-[var(--primary)]" />
-
-                    <LayoutDashboard
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-semibold">
-                        Dashboard
-                    </span>
-                </div>
-
-
-                {/* Tasks */}
-                <div className="flex h-10 cursor-pointer items-center gap-3 px-5 text-[var(--on-surface-variant)] transition-all hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]">
-
-                    <ClipboardList
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-medium">
-                        Tasks
-                    </span>
-                </div>
-
-
-                {/* Change Theme */}
-                <div
-                    onClick={() => themeChange()}
-                    className="flex h-10 cursor-pointer items-center gap-3 px-5 text-[var(--on-surface-variant)] transition-all hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]"
-                >
-
-                    <ClipboardList
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-medium">
-                        Change Theme
-                    </span>
-                </div>
-
-
-                {/* Team */}
-                <div className="flex h-10 cursor-pointer items-center gap-3 px-5 text-[var(--on-surface-variant)] transition-all hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]">
-
-                    <Users
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-medium">
-                        Team
-                    </span>
-                </div>
-
-
-                {/* Chat */}
-                <div className="flex h-10 cursor-pointer items-center gap-3 px-5 text-[var(--on-surface-variant)] transition-all hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]">
-
-                    <MessageSquare
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-medium">
-                        Chat
-                    </span>
-                </div>
-
-
-                {/* Settings */}
-                <div className="flex h-10 cursor-pointer items-center gap-3 px-5 text-[var(--on-surface-variant)] transition-all hover:bg-[var(--surface-container-low)] hover:text-[var(--primary)]">
-
-                    <Settings
-                        size={17}
-                        strokeWidth={1.8}
-                    />
-
-                    <span className="text-[12px] font-medium">
-                        Settings
-                    </span>
-                </div>
-
-            </nav>
-
+        <NavigationTab  path={"/home/department"} Icon={<ChartArea/>} title={"department"}/>
 
             {/* ================= BOTTOM BUTTON ================= */}
             <div className="mt-auto border-t border-[var(--outline-variant)] p-4">
