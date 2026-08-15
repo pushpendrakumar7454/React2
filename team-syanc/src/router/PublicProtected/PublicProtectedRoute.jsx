@@ -8,7 +8,7 @@ const PublicProtectedRoute = () => {
  const {employee, isLoading}= useSelector((state)=>state.auth)
  if(isLoading) return <h1>Loading</h1>
  if(employee){
-  return <Navigate to="/main" replace/>
+  return <Navigate to="/home" replace/>
  }
 
   return <Outlet/>

@@ -25,7 +25,7 @@ export const useAuth = () => {
         localStorage.setItem("registerUSer", JSON.stringify(arr))
         setRegisterUSer(arr)
         alert("user register succeesfully")
-        navigate("/login")
+        navigate("/")
         reset()
     }
 
@@ -35,7 +35,7 @@ export const useAuth = () => {
 
             console.log("Login success:", result);
 
-            navigate("/main");
+            navigate("/home");
         } catch (error) {
             console.log("Login failed:", error);
         }

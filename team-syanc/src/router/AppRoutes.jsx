@@ -11,6 +11,7 @@ import Home from '../features/dashboard/ui/pages/Home'
 import { useDispatch } from 'react-redux'
 
 import { currentLoggedEmployee } from '../features/auth/state/auth/authAction'
+import { commonRoutes } from './CommanRoutes'
 
 const AppRoutes = () => {
 const dispatch=useDispatch()
@@ -40,18 +41,13 @@ useEffect(() => {
             ]
            
         },{
-            path:'/main',
+            path:'/home',
             element:<ProtectedRoute/>,
             children:[
                 {
                     path:"",
                     element:<DashboardLayout/>,
-                    children:[
-                        {
-                            path:"",
-                            element:<Home/>
-                        }
-                    ]
+                    children:[...commonRoutes]
                 }
             ]
         }
