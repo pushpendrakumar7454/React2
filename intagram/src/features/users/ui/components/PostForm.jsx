@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Image, X } from "lucide-react";
 
-const PostForm = () => {
+const PostForm = ({onaddPost}) => {
+     console.log("onaddPost:", onaddPost);
   const [imagePreview, setImagePreview] = useState(null);
+  
 
   const {
     register,
@@ -44,6 +46,7 @@ const PostForm = () => {
 
   const onSubmit = (data) => {
     console.log("Post Data:", data);
+    onaddPost(data)
     reset();
     setImagePreview(null);
   };

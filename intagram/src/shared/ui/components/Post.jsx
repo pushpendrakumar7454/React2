@@ -9,34 +9,32 @@ import {
 } from "lucide-react";
 
 const Post = ({ post }) => {
-
   const [liked, setLiked] = useState(false);
 
   return (
     <article className="border-b border-gray-200 pb-5">
 
-      {/* ================= HEADER ================= */}
-
+      {/* Header */}
       <div className="flex items-center justify-between py-3">
 
         <div className="flex items-center gap-3">
 
-          <img
-            src={post.profile}
-            alt={post.username}
-            className="h-9 w-9 rounded-full object-cover"
-          />
+          <div className="h-9 w-9 overflow-hidden rounded-full bg-gray-200">
+            <img
+              src="https://i.pravatar.cc/150?img=12"
+              alt="profile"
+              className="h-full w-full object-cover"
+            />
+          </div>
 
           <div>
-
             <p className="text-sm font-semibold">
-              {post.username}
+              pushpendra
             </p>
 
             <p className="text-xs text-gray-500">
-              {post.time}
+              Just now
             </p>
-
           </div>
 
         </div>
@@ -48,24 +46,19 @@ const Post = ({ post }) => {
 
       </div>
 
-
-      {/* ================= IMAGE ================= */}
-
+      {/* Image */}
       <img
-        src={post.image}
+        src={URL.createObjectURL(post.image)}
         alt="post"
         className="w-full rounded-sm object-cover"
       />
 
-
-      {/* ================= ACTIONS ================= */}
-
+      {/* Actions */}
       <div className="flex items-center justify-between py-3">
 
         <div className="flex items-center gap-4">
 
-          {/* LIKE */}
-
+          {/* Like */}
           <button
             onClick={() => setLiked(!liked)}
             className="transition active:scale-90"
@@ -77,69 +70,45 @@ const Post = ({ post }) => {
             />
           </button>
 
-
-          {/* COMMENT */}
-
+          {/* Comment */}
           <button>
-            <MessageCircle
-              size={25}
-            />
+            <MessageCircle size={25} />
           </button>
 
-
-          {/* SHARE */}
-
+          {/* Share */}
           <button>
-            <Send
-              size={25}
-            />
+            <Send size={25} />
           </button>
 
         </div>
 
-
-        {/* BOOKMARK */}
-
+        {/* Bookmark */}
         <button>
-          <Bookmark
-            size={25}
-          />
+          <Bookmark size={25} />
         </button>
 
       </div>
 
-
-      {/* ================= LIKES ================= */}
-
+      {/* Likes */}
       <p className="text-sm font-semibold">
-        {liked
-          ? `${Number(post.likes.replace(",", "")) + 1} likes`
-          : `${post.likes} likes`}
+        {liked ? "1 like" : "0 likes"}
       </p>
 
-
-      {/* ================= CAPTION ================= */}
-
+      {/* Caption */}
       <p className="mt-1 text-sm">
-
         <span className="mr-2 font-semibold">
-          {post.username}
+          pushpendra
         </span>
 
         {post.caption}
-
       </p>
 
-
-      {/* ================= COMMENTS ================= */}
-
+      {/* Comments */}
       <p className="mt-2 cursor-pointer text-sm text-gray-500">
         View all comments
       </p>
 
-
-      {/* ================= COMMENT INPUT ================= */}
-
+      {/* Comment Input */}
       <input
         type="text"
         placeholder="Add a comment..."
