@@ -3,7 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
-  useNavigate,
+  
 } from "react-router";
 import { useDispatch } from "react-redux";
 
@@ -42,9 +42,6 @@ const AuthHydrate = () => {
 };
 
 
-// -------------------------
-// App Routes
-// -------------------------
 const AppRoutes = () => {
 
   const router = createBrowserRouter([

@@ -28,6 +28,7 @@ export const useAuth = () => {
 
     const loginUserForm = (data) => {
 
+
         const existUser = registerUser.find((u) => u.email === data.email && u.password === data.password)
         if (existUser) {
             localStorage.setItem("authenticatedUser", JSON.stringify(existUser))
