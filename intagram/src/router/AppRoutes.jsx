@@ -18,6 +18,7 @@ import Login from "../features/auth/ui/pages/Login";
 import Register from "../features/auth/ui/pages/Register";
 
 import { addUser } from "../features/auth/state/authUser";
+import PostForm from "../features/users/ui/components/PostForm";
 
 
 const AuthHydrate = () => {
@@ -75,7 +76,10 @@ const AppRoutes = () => {
                 {
                   path: "/",
                   element: <Home />,
-                },
+                },{
+                  path:"post-form",
+                  element:<PostForm/>
+                }
               ],
 
             },

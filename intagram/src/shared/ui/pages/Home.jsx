@@ -2,9 +2,10 @@ import React from "react";
 
 import Story from "../components/Story";
 import Post from "../components/Post";
+
 import FollowSuggestion from "../components/FollowSuggestion";
 
-import posts from "../../../data/posts";
+
 
 const Home = () => {
   return (
@@ -15,12 +16,7 @@ const Home = () => {
         <Story />
 
         <div className="mt-2 space-y-7">
-          {posts.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-            />
-          ))}
+ 
         </div>
 
       </div>

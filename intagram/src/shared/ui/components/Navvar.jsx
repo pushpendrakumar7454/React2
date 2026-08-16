@@ -46,6 +46,7 @@ const Navvar = () => {
     {
       name: "Create",
       icon: PlusSquare,
+      path:"/post-form"
     },
     {
       name: "Profile",
