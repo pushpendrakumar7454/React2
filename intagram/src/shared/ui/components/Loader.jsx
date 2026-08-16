@@ -17,7 +17,7 @@ const Loader = ({ onComplete }) => {
     })
       .to(logoRef.current, {
         scale: 1,
-        duration: 0.5,
+        duration: 1,
         ease: "power2.inOut",
       })
       .to(loaderRef.current, {
