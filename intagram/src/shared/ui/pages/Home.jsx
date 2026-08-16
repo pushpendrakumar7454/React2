@@ -11,10 +11,16 @@ import PostForm from "../../../features/users/ui/components/PostForm";
 const Home = () => {
   const [users, setUsers] = useState([])
 
-
-  const handleAddPost=(data)=>{
-    setUsers((prev)=>[...prev,data])
-  }
+const handleAddPost = (data) => {
+  setUsers((prev) => [
+    ...prev,
+    {
+      id: Date.now(),
+      image: data.image,
+      caption: data.caption,
+    },
+  ]);
+};
   return (
     <div className="flex justify-center gap-10 px-3 lg:px-6">
 

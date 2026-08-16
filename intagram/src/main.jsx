@@ -4,6 +4,7 @@ import "./index.css";
 
 import { Provider } from "react-redux";
 import { store } from "./app/store.js";
+
 import AppRoutes from "./router/AppRoutes.jsx";
 
 import Loader from "./shared/ui/components/Loader.jsx";
@@ -11,6 +12,7 @@ import Loader from "./shared/ui/components/Loader.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import UserContextProvider from './app/context/context.jsx'
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -31,6 +33,10 @@ const App = () => {
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <App />
+
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
+
   </Provider>
 );
