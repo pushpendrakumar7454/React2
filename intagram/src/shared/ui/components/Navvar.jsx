@@ -194,6 +194,7 @@ const Navvar = () => {
 
         <button className="flex h-10 w-10 items-center justify-center rounded-full active:bg-gray-100">
           <PlusSquare
+          onClick={()=>navigate("/post-form")}
             size={25}
             strokeWidth={1.8}
           />

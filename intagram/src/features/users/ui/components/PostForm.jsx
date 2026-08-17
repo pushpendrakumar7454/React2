@@ -9,6 +9,7 @@ const PostForm = () => {
 
   // Redux se logged-in user
   const { user } = useSelector((state) => state.auth);
+
   console.log("LOGGED IN USER:", user);
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -29,6 +30,8 @@ const PostForm = () => {
 
   const caption = watch("caption");
 
+  // ================= IMAGE CHANGE =================
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -43,6 +46,8 @@ const PostForm = () => {
     setImagePreview(preview);
   };
 
+  // ================= REMOVE IMAGE =================
+
   const removeImage = () => {
     setImagePreview(null);
 
@@ -51,13 +56,15 @@ const PostForm = () => {
     });
   };
 
+  // ================= FORM SUBMIT =================
+
   const handleForm = (data) => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-
       const newPost = {
-        // Post ID
+        // ================= POST ID =================
+
         id: Date.now(),
 
         // ================= USER DATA =================
@@ -81,161 +88,144 @@ const PostForm = () => {
 
       console.log("New Post:", newPost);
 
-      setUsers((prev) => [
-        ...prev,
-        newPost,
-      ]);
+      setUsers((prev) => [...prev, newPost]);
 
       reset();
 
       setImagePreview(null);
     };
 
-    reader.readAsDataURL(data.image);
+    if (data.image) {
+      reader.readAsDataURL(data.image);
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen bg-gray-50 px-3 py-6 sm:px-4 sm:py-10">
+      
+      {/* ================= FORM ================= */}
 
-      <form
-        onSubmit={handleSubmit(handleForm)}
-        className="w-full max-w-[500px] overflow-hidden rounded-xl border border-gray-200 bg-white"
-      >
+      <div className="flex min-h-[calc(100vh-3rem)] items-center justify-center sm:min-h-[calc(100vh-5rem)]">
+        
+        <form
+          onSubmit={handleSubmit(handleForm)}
+          className="w-full max-w-[500px] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
+        >
+          
+          {/* ================= HEADER ================= */}
 
-        {/* ================= HEADER ================= */}
+          <div className="border-b border-gray-200 px-4 py-4 text-center sm:px-5">
+            <h2 className="text-lg font-semibold">
+              Create new post
+            </h2>
+          </div>
 
-        <div className="border-b border-gray-200 px-5 py-4 text-center">
+          {/* ================= IMAGE ================= */}
 
-          <h2 className="text-lg font-semibold">
-            Create new post
-          </h2>
-
-        </div>
-
-
-        {/* ================= IMAGE ================= */}
-
-        <div className="flex min-h-[300px] items-center justify-center bg-gray-50">
-
-          {imagePreview ? (
-
-            <div className="relative w-full">
-
-              <img
-                src={imagePreview}
-                alt="preview"
-                className="max-h-[450px] w-full object-contain"
-              />
-
-              {/* Remove Image */}
-
-              <button
-                type="button"
-                onClick={removeImage}
-                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white"
-              >
-                <X size={18} />
-              </button>
-
-            </div>
-
-          ) : (
-
-            <div className="flex flex-col items-center px-5">
-
-              {/* Image Icon */}
-
-              <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-
-                <Image
-                  size={40}
-                  strokeWidth={1.5}
+          <div className="flex min-h-[280px] items-center justify-center bg-gray-50 sm:min-h-[300px]">
+            
+            {imagePreview ? (
+              <div className="relative w-full">
+                
+                <img
+                  src={imagePreview}
+                  alt="preview"
+                  className="max-h-[400px] w-full object-contain sm:max-h-[450px]"
                 />
+
+                {/* Remove Image */}
+
+                <button
+                  type="button"
+                  onClick={removeImage}
+                  className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white"
+                >
+                  <X size={18} />
+                </button>
 
               </div>
+            ) : (
+              <div className="flex flex-col items-center px-4 py-6 text-center sm:px-5">
+                
+                {/* Image Icon */}
 
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 sm:h-20 sm:w-20">
+                  <Image
+                    size={34}
+                    strokeWidth={1.5}
+                    className="sm:h-10 sm:w-10"
+                  />
+                </div>
 
-              <h3 className="text-xl font-normal">
-                Drag photos and videos here
-              </h3>
+                <h3 className="text-lg font-normal sm:text-xl">
+                  Drag photos and videos here
+                </h3>
 
-
-              <p className="mt-2 text-sm text-gray-500">
-                Or select from your device
-              </p>
-
-
-              {/* Gallery */}
-
-              <label className="mt-5 cursor-pointer rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600">
-
-                Select from computer
-
-                <input
-                  {...register("image", {
-                    required: "Please select an image",
-                  })}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-
-              </label>
-
-
-              {/* Error */}
-
-              {errors.image && (
-                <p className="mt-2 text-sm text-red-500">
-                  {errors.image.message}
+                <p className="mt-2 text-sm text-gray-500">
+                  Or select from your device
                 </p>
-              )}
 
+                {/* Gallery */}
+
+                <label className="mt-5 cursor-pointer rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-600">
+                  Select from computer
+
+                  <input
+                    {...register("image", {
+                      required: "Please select an image",
+                    })}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </label>
+
+                {/* Error */}
+
+                {errors.image && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {errors.image.message}
+                  </p>
+                )}
+
+              </div>
+            )}
+          </div>
+
+          {/* ================= CAPTION ================= */}
+
+          <div className="border-t border-gray-200 px-4 py-4 sm:px-5">
+            
+            <textarea
+              {...register("caption")}
+              maxLength={2200}
+              placeholder="Write a caption..."
+              className="h-24 w-full resize-none text-sm outline-none placeholder:text-gray-500 sm:text-base"
+            />
+
+            <div className="text-right text-xs text-gray-400">
+              {caption?.length || 0} / 2,200
             </div>
-
-          )}
-
-        </div>
-
-
-        {/* ================= CAPTION ================= */}
-
-        <div className="border-t border-gray-200 px-5 py-4">
-
-          <textarea
-            {...register("caption")}
-            maxLength={2200}
-            placeholder="Write a caption..."
-            className="h-24 w-full resize-none outline-none placeholder:text-gray-500"
-          />
-
-
-          <div className="text-right text-xs text-gray-400">
-
-            {caption?.length || 0} / 2,200
 
           </div>
 
-        </div>
+          {/* ================= SHARE ================= */}
 
+          <div className="border-t border-gray-200 px-4 py-4 sm:px-5">
+            
+            <button
+              type="submit"
+              disabled={!imagePreview}
+              className="w-full rounded-lg bg-blue-500 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Share
+            </button>
 
-        {/* ================= SHARE ================= */}
+          </div>
 
-        <div className="border-t border-gray-200 px-5 py-4">
-
-          <button
-            type="submit"
-            disabled={!imagePreview}
-            className="w-full rounded-lg bg-blue-500 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            Share
-          </button>
-
-        </div>
-
-      </form>
-
+        </form>
+      </div>
     </div>
   );
 };

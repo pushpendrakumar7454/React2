@@ -45,7 +45,7 @@ const UserCard = ({ users }) => {
   };
 
 
-  // ================= REAL TIME =================
+
 
   useEffect(() => {
     setTimeAgo(getTimeAgo());
