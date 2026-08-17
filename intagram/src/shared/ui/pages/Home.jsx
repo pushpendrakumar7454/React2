@@ -12,6 +12,7 @@ import { userContext } from "../../../app/context/context";
 
 const Home = () => {
   const {users}=useContext(userContext)
+  console.log("ALL POSTS:", users);
   
 
   return (

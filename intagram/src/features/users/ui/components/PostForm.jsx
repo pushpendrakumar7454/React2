@@ -9,6 +9,7 @@ const PostForm = () => {
 
   // Redux se logged-in user
   const { user } = useSelector((state) => state.auth);
+  console.log("LOGGED IN USER:", user);
 
   const [imagePreview, setImagePreview] = useState(null);
 
