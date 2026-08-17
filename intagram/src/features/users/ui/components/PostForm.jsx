@@ -6,13 +6,11 @@ import { useSelector } from "react-redux";
 
 const PostForm = () => {
   const { setUsers } = useContext(userContext);
-
-  // Redux se logged-in user
   const { user } = useSelector((state) => state.auth);
 
-  console.log("LOGGED IN USER:", user);
 
   const [imagePreview, setImagePreview] = useState(null);
+  
 
   const {
     register,
