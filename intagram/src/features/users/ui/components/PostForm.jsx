@@ -1,81 +1,237 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Image, X } from "lucide-react";
+import { userContext } from "../../../../app/context/context";
+import { useSelector } from "react-redux";
 
 const PostForm = () => {
+  const { setUsers } = useContext(userContext);
 
-   const{register,handleSubmit,reset}= useForm()
-  
-   const handleForm=(data)=>{
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
+  // Redux se logged-in user
+  const { user } = useSelector((state) => state.auth);
 
-   }
+  const [imagePreview, setImagePreview] = useState(null);
 
-    return (
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      image: null,
+      caption: "",
+    },
+  });
+
+  const caption = watch("caption");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    setValue("image", file, {
+      shouldValidate: true,
+    });
+
+    const preview = URL.createObjectURL(file);
+
+    setImagePreview(preview);
+  };
+
+  const removeImage = () => {
+    setImagePreview(null);
+
+    setValue("image", null, {
+      shouldValidate: true,
+    });
+  };
+
+  const handleForm = (data) => {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+
+      const newPost = {
+        // Post ID
+        id: Date.now(),
+
+        // ================= USER DATA =================
+
+        userId: user?.id,
+        userName: user?.name,
+        userProfile: user?.profileImage,
+
+        // ================= POST DATA =================
+
+        image: reader.result,
+        caption: data.caption,
+
+        // ================= TIME =================
+
+        createdAt: Date.now(),
+
+        timeZone:
+          Intl.DateTimeFormat().resolvedOptions().timeZone,
+      };
+
+      console.log("New Post:", newPost);
+
+      setUsers((prev) => [
+        ...prev,
+        newPost,
+      ]);
+
+      reset();
+
+      setImagePreview(null);
+    };
+
+    reader.readAsDataURL(data.image);
+  };
+
+  return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
 
-      <form onSubmit={handleSubmit(handleForm)} className="w-full max-w-[500px] rounded-xl border border-gray-200 bg-white p-6">
+      <form
+        onSubmit={handleSubmit(handleForm)}
+        className="w-full max-w-[500px] overflow-hidden rounded-xl border border-gray-200 bg-white"
+      >
 
-        <h2 className="mb-6 text-center text-xl font-semibold">
-          Create Post
-        </h2>
+        {/* ================= HEADER ================= */}
 
-        {/* Image */}
-        <div className="mb-5">
-          <label className="mb-2 block text-sm font-medium">
-            Image
-          </label>
+        <div className="border-b border-gray-200 px-5 py-4 text-center">
 
-          <input
-          {...register("img",{
-            required:"image is required"
-          })}
-            type="url"
-            placeholder="enter imagee"
-            className="w-full rounded-lg border border-gray-300 p-2 text-sm"
-          />
+          <h2 className="text-lg font-semibold">
+            Create new post
+          </h2>
+
         </div>
 
-        {/* Name */}
-        <div className="mb-5">
-          <label className="mb-2 block text-sm font-medium">
-            Name
-          </label>
 
-          <input
-          {...register("name",{
-            required:"name is required"
-          })}
-            type="text"
-            placeholder="Enter name"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
-          />
+        {/* ================= IMAGE ================= */}
+
+        <div className="flex min-h-[300px] items-center justify-center bg-gray-50">
+
+          {imagePreview ? (
+
+            <div className="relative w-full">
+
+              <img
+                src={imagePreview}
+                alt="preview"
+                className="max-h-[450px] w-full object-contain"
+              />
+
+              {/* Remove Image */}
+
+              <button
+                type="button"
+                onClick={removeImage}
+                className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white"
+              >
+                <X size={18} />
+              </button>
+
+            </div>
+
+          ) : (
+
+            <div className="flex flex-col items-center px-5">
+
+              {/* Image Icon */}
+
+              <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+
+                <Image
+                  size={40}
+                  strokeWidth={1.5}
+                />
+
+              </div>
+
+
+              <h3 className="text-xl font-normal">
+                Drag photos and videos here
+              </h3>
+
+
+              <p className="mt-2 text-sm text-gray-500">
+                Or select from your device
+              </p>
+
+
+              {/* Gallery */}
+
+              <label className="mt-5 cursor-pointer rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-600">
+
+                Select from computer
+
+                <input
+                  {...register("image", {
+                    required: "Please select an image",
+                  })}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+
+              </label>
+
+
+              {/* Error */}
+
+              {errors.image && (
+                <p className="mt-2 text-sm text-red-500">
+                  {errors.image.message}
+                </p>
+              )}
+
+            </div>
+
+          )}
+
         </div>
 
-        {/* Description */}
-        <div className="mb-5">
-          <label className="mb-2 block text-sm font-medium">
-            Description
-          </label>
+
+        {/* ================= CAPTION ================= */}
+
+        <div className="border-t border-gray-200 px-5 py-4">
 
           <textarea
-          {...register("des",{
-            required:"description is required"
-          })}
-            rows="5"
-            placeholder="Write something..."
-            className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-500"
+            {...register("caption")}
+            maxLength={2200}
+            placeholder="Write a caption..."
+            className="h-24 w-full resize-none outline-none placeholder:text-gray-500"
           />
+
+
+          <div className="text-right text-xs text-gray-400">
+
+            {caption?.length || 0} / 2,200
+
+          </div>
+
         </div>
 
-        {/* Button */}
-        <button
-          type="submit"
-          className="w-full rounded-lg bg-blue-500 py-2.5 text-sm font-semibold text-white hover:bg-blue-600"
-        >
-          Post
-        </button>
+
+        {/* ================= SHARE ================= */}
+
+        <div className="border-t border-gray-200 px-5 py-4">
+
+          <button
+            type="submit"
+            disabled={!imagePreview}
+            className="w-full rounded-lg bg-blue-500 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Share
+          </button>
+
+        </div>
 
       </form>
 

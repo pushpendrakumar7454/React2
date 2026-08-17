@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import Story from "../components/Story";
 import Post from "../components/Post";
 
 import FollowSuggestion from "../components/FollowSuggestion";
 import PostForm from "../../../features/users/ui/components/PostForm";
+import UserCard from "../../../features/users/ui/components/UserCard";
+import { userContext } from "../../../app/context/context";
 
 
 
 const Home = () => {
-  const [users, setUsers] = useState([])
+  const {users}=useContext(userContext)
+  
 
-const handleAddPost = (data) => {
-  setUsers((prev) => [
-    ...prev,
-    {
-      id: Date.now(),
-      image: data.image,
-      caption: data.caption,
-    },
-  ]);
-};
   return (
     <div className="flex justify-center gap-10 px-3 lg:px-6">
 
@@ -29,12 +22,12 @@ const handleAddPost = (data) => {
         <Story />
 
         <div className="mt-2 space-y-7">
-          <PostForm onaddPost={handleAddPost}/>
-          {
-          users.map((post)=>{
-            return <Post key={post.id} post={post}/>
+
+         {
+          users.map((users)=>{
+            return <UserCard key={users.id} users={users}/>
           })
-          }
+         }
  
         </div>
 
