@@ -1,11 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import Story from "../components/Story";
 import Post from "../components/Post";
 
 import FollowSuggestion from "../components/FollowSuggestion";
-import PostForm from "../../../features/users/ui/components/PostForm";
-import UserCard from "../../../features/users/ui/components/UserCard";
+
 import { userContext } from "../../../app/context/context";
 
 
@@ -24,12 +23,6 @@ const Home = () => {
 
         <div className="mt-2 space-y-7">
 
-         {
-          users.map((users)=>{
-            return <UserCard key={users.id} users={users}/>
-          })
-         }
- 
         </div>
 
       </div>

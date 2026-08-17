@@ -18,7 +18,7 @@ import Login from "../features/auth/ui/pages/Login";
 import Register from "../features/auth/ui/pages/Register";
 
 import { addUser } from "../features/auth/state/authUser";
-import PostForm from "../features/users/ui/components/PostForm";
+import PostForm from "../features/posts/ui/components/PostForm";
 
 
 const AuthHydrate = () => {
@@ -26,21 +26,15 @@ const AuthHydrate = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     const user = localStorage.getItem("authenticatedUser");
-
     if (!user) return;
 
     try {
-
       const loggedUser = JSON.parse(user);
-
       dispatch(addUser(loggedUser));
 
     } catch (error) {
-
       console.log("Invalid user data:", error);
-
       localStorage.removeItem("authenticatedUser");
 
     }
@@ -61,8 +55,6 @@ const AppRoutes = () => {
       element: <AuthHydrate />,
 
       children: [
-
-        // ================= PROTECTED =================
 
         {
           element: <ProtectedRouter />,

@@ -3,16 +3,16 @@ import { createContext, useEffect, useState } from "react";
 export const userContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-    const [users, setUsers] = useState(()=>{
+    const [posts, setPosts] = useState(()=>{
       return JSON.parse(localStorage.getItem('users'))||[]
     })
 
     useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
+    localStorage.setItem("users", JSON.stringify(posts));
+  }, [posts]);
 
   return (
-    <userContext.Provider value={{users,setUsers}}>
+    <userContext.Provider value={{posts,setPosts}}>
       {children}
     </userContext.Provider>
   );
