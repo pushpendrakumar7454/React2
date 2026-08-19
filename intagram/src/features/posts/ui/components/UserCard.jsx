@@ -1,160 +1,45 @@
 import React from "react";
-import {
-  Heart,
-  MessageCircle,
-  Send,
-  Bookmark,
-  MoreHorizontal,
-  BadgeCheck,
-} from "lucide-react";
+import { useSelector } from "react-redux";
 
 const UserCard = ({post}) => {
+
+  const {user}=useSelector((state)=>state.auth)
   return (
-    <article className="w-full max-w-[630px] mx-auto bg-white">
+    <div className="min-h-screen w-full bg-white">
+      <div className="mx-auto w-full max-w-[470px]">
 
-      {/* ================= HEADER ================= */}
-      <div className="flex w-full items-center gap-2 px-3 py-3">
+        <div className="flex h-[72px] items-center justify-between px-3">
+          <div className="flex min-w-0 items-center gap-2.5">
+            <img src={post.image} alt="Profile" className="h-9 w-9 shrink-0 rounded-full object-cover" />
 
-        {/* PROFILE IMAGE */}
-        <img
-          src={post?.image}
-          alt="profile"
-          className="h-10 w-10 shrink-0 rounded-full object-cover"
-        />
-
-        {/* USER INFO */}
-        <div className="min-w-0 flex-1">
-
-          <div className="flex items-center gap-1.5">
-
-            <span className="truncate text-sm font-semibold text-gray-900">
-              neeraj_kumar
-            </span>
-
-            <BadgeCheck
-              size={14}
-              fill="rgb(59 130 246)"
-              className="shrink-0 text-blue-500"
-            />
-
+            <div className="flex items-center gap-1.5">
+              <span className="text-[14px] font-semibold text-black capitalize">{user.name}</span>
+              <span className="text-[13px] text-gray-400">·</span>
+              <span className="text-[13px] text-gray-500">4h</span>
+            </div>
           </div>
 
-          <p className="mt-0.5 text-xs text-gray-500">
-            Just now
-          </p>
-
-        </div>
-
-        {/* ================= RIGHT SIDE ================= */}
-        <div className="ml-auto flex shrink-0 items-center gap-3">
-
-          {/* FOLLOW */}
-          <button
-            type="button"
-            className="text-sm font-semibold text-blue-500 hover:text-blue-700"
-          >
-            Follow
-          </button>
-
-          {/* THREE DOTS */}
-          <button
-            type="button"
-            className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-gray-100"
-          >
-            <MoreHorizontal
-              size={22}
-              strokeWidth={2}
-              className="text-gray-900"
-            />
-          </button>
-
-        </div>
-
-      </div>
-
-      {/* ================= IMAGE ================= */}
-      <div className="w-full overflow-hidden">
-        <img
-          src={post.image}
-          alt="post"
-          className="block h-auto w-full object-cover"
-        />
-      </div>
-
-      {/* ================= POST CONTENT ================= */}
-      <div className="w-full px-3">
-
-        {/* ACTIONS */}
-        <div className="flex items-center justify-between pt-3">
-
-          <div className="flex items-center gap-4">
-
-            <button type="button">
-              <Heart size={25} strokeWidth={1.8} />
+          <div className="flex items-center gap-3">
+            <button type="button" className="rounded-lg bg-[#f2f2f2] px-4 py-2 text-[14px] font-semibold text-black transition hover:bg-[#e7e7e7] active:scale-95">
+              Follow
             </button>
 
-            <button type="button">
-              <MessageCircle size={25} strokeWidth={1.8} />
+            <button type="button" aria-label="More options" className="flex h-9 w-7 items-center justify-center text-black">
+              <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
+                <circle cx="5" cy="12" r="1.6" />
+                <circle cx="12" cy="12" r="1.6" />
+                <circle cx="19" cy="12" r="1.6" />
+              </svg>
             </button>
-
-            <button type="button">
-              <Send size={25} strokeWidth={1.8} />
-            </button>
-
           </div>
-
-          <button type="button">
-            <Bookmark size={25} strokeWidth={1.8} />
-          </button>
-
         </div>
 
-        {/* LIKES */}
-        <p className="mt-2 text-sm font-semibold text-gray-900">
-          1,248 likes
-        </p>
-
-        {/* CAPTION */}
-        <p className="mt-1 text-sm leading-5 text-gray-900">
-          <span className="font-semibold">
-            neeraj_kumar
-          </span>{" "}
-          Beautiful day and beautiful memories ❤️✨
-        </p>
-
-        {/* COMMENTS */}
-        <button
-          type="button"
-          className="mt-1 text-sm text-gray-500"
-        >
-          View all 42 comments
-        </button>
-
-        {/* COMMENT INPUT */}
-        <div className="mt-2 flex items-center gap-2 border-b border-gray-200 pb-3">
-
-          <img
-            src="https://i.pravatar.cc/100?img=11"
-            alt="profile"
-            className="h-7 w-7 shrink-0 rounded-full object-cover"
-          />
-
-          <input
-            type="text"
-            placeholder="Add a comment..."
-            className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
-          />
-
+        <div className="w-full overflow-hidden rounded-[4px]">
+          <img src={post.image}alt="Post" className="block aspect-[1/1] w-full object-cover object-center sm:aspect-[1/1] md:aspect-[1/1]" />
         </div>
-
-        {/* TIME */}
-        <p className="py-3 text-[10px] uppercase tracking-wide text-gray-400">
-          JUST NOW
-        </p>
 
       </div>
-
-    </article>
+    </div>
   );
 };
 
