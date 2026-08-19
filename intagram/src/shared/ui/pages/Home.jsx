@@ -4,14 +4,20 @@ import Story from "../components/Story";
 import Post from "../components/Post";
 
 import FollowSuggestion from "../components/FollowSuggestion";
+import { useSelector } from "react-redux";
+import UserCard from "../../../features/posts/ui/components/UserCard";
+import { data } from "react-router";
 
-import { userContext } from "../../../app/context/context";
+
 
 
 
 const Home = () => {
-  const {users}=useContext(userContext)
-  console.log("ALL POSTS:", users);
+
+
+  const{posts}=useSelector((state)=>state.post)
+  console.log(posts)
+  
   
 
   return (
@@ -22,6 +28,9 @@ const Home = () => {
         <Story />
 
         <div className="mt-2 space-y-7">
+          {posts.map((post)=>{
+            return <UserCard key={post.id} post={post}/>
+          })}
 
         </div>
 

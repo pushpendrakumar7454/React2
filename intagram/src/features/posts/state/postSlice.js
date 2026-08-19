@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const postslice = createSlice({
     name: "posts",
     initialState: {
@@ -7,8 +8,8 @@ const postslice = createSlice({
     },
     reducers: {
         addPost: (state, action) => {
-            state.posts = action.payload
-            localStorage.setItem("posts", JSON.stringify(action.payload))
+            state.posts.push(action.payload)
+            localStorage.setItem("posts", JSON.stringify(state.posts))
 
         },
         removePost: (state, action) => {
