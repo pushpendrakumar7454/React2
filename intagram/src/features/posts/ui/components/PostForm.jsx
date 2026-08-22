@@ -1,4 +1,5 @@
-import { Image } from "lucide-react";
+import { Image, Music, X } from "lucide-react";
+import { useState } from "react";
 import { useAuthpost } from "../../hooks/useAuth";
 
 const PostForm = () => {
@@ -9,27 +10,45 @@ const PostForm = () => {
     submitPost,
   } = useAuthpost();
 
-  const onSubmit = (data) => {
-  const file = data.image?.[0];
+  const [songName, setSongName] = useState("");
 
-  if (!file) {
-    return;
-  }
+  const onSubmit = async (data) => {
+    const imageFile = data.image?.[0];
+    const songFile = data.song?.[0];
 
-  const reader = new FileReader();
+    if (!imageFile) {
+      return;
+    }
 
-  reader.onload = () => {
-    const postData = {
-      ...data,
-      image: reader.result,
+    const imageReader = new FileReader();
+
+    imageReader.onload = () => {
+      const postData = {
+        ...data,
+        image: imageReader.result,
+        song: null,
+        songName: "",
+      };
+
+      // Agar song select kiya hai
+      if (songFile) {
+        const songReader = new FileReader();
+
+        songReader.onload = () => {
+          postData.song = songReader.result;
+          postData.songName = songFile.name;
+
+          submitPost(postData);
+        };
+
+        songReader.readAsDataURL(songFile);
+      } else {
+        submitPost(postData);
+      }
     };
 
-    submitPost(postData);
+    imageReader.readAsDataURL(imageFile);
   };
-
-  reader.readAsDataURL(file);
-};
-
 
   return (
     <div className="min-h-screen w-full bg-gray-50 px-3 py-6 pb-24 sm:px-4 sm:py-10">
@@ -78,7 +97,7 @@ const PostForm = () => {
                     required: "Please select an image",
                   })}
                   type="file"
-                  accept="image/*"
+                  accept="image/*,video/*"
                   className="hidden"
                 />
 
@@ -103,6 +122,87 @@ const PostForm = () => {
               placeholder="Write a caption..."
               className="h-24 w-full resize-none bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-500 sm:text-base"
             />
+
+          </div>
+
+          {/* SONG */}
+          <div className="border-t border-gray-200 px-4 py-4">
+
+            <div className="flex items-center justify-between">
+
+              <div className="flex items-center gap-3">
+
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+                  <Music
+                    size={22}
+                    className="text-gray-700"
+                  />
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-gray-900">
+                    Add music
+                  </p>
+
+                  <p className="text-xs text-gray-500">
+                    Add a song to your post
+                  </p>
+                </div>
+
+              </div>
+
+              <label className="cursor-pointer rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">
+
+                Add song
+
+                <input
+                  {...register("song", {
+                    onChange: (e) => {
+                      const file = e.target.files?.[0];
+
+                      if (file) {
+                        setSongName(file.name);
+                      }
+                    },
+                  })}
+                  type="file"
+                  accept="audio/*"
+                  className="hidden"
+                />
+
+              </label>
+
+            </div>
+
+            {/* SELECTED SONG */}
+            {songName && (
+              <div className="mt-4 flex items-center justify-between rounded-lg bg-gray-50 px-3 py-3">
+
+                <div className="flex min-w-0 items-center gap-3">
+
+                  <Music
+                    size={20}
+                    className="shrink-0 text-blue-500"
+                  />
+
+                  <p className="truncate text-sm text-gray-700">
+                    {songName}
+                  </p>
+
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSongName("");
+                  }}
+                  className="ml-2 shrink-0 text-gray-500 hover:text-red-500"
+                >
+                  <X size={18} />
+                </button>
+
+              </div>
+            )}
 
           </div>
 

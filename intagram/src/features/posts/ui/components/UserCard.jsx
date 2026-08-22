@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { Volume2, VolumeX } from "lucide-react";
 
 const UserCard = ({ post }) => {
   const { user } = useSelector((state) => state.auth);
+
+  const audioRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  
+  useEffect(() => {
+    if (!post?.song || !audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    audio.muted = true;
+    audio.loop = true;
+
+    audio
+      .play()
+      .catch((error) => {
+        console.log("Autoplay blocked by browser:", error);
+      });
+
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [post?.song]);
+
+  // ================= VOLUME BUTTON =================
+  const handleVolume = () => {
+    if (!audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    if (isMuted) {
+      audio.muted = false;
+      setIsMuted(false);
+
+      // Agar autoplay ki wajah se song play nahi hua tha
+      audio.play().catch(() => {});
+    } else {
+      audio.muted = true;
+      setIsMuted(true);
+    }
+  };
 
   return (
     <article className="w-full bg-white">
@@ -20,6 +63,7 @@ const UserCard = ({ post }) => {
           />
 
           <div className="flex min-w-0 items-center gap-1.5">
+
             <span className="truncate text-[14px] font-semibold text-black">
               {user?.name || "User"}
             </span>
@@ -31,8 +75,8 @@ const UserCard = ({ post }) => {
             <span className="text-[13px] text-gray-500">
               4h
             </span>
-          </div>
 
+          </div>
         </div>
 
         {/* RIGHT */}
@@ -61,11 +105,10 @@ const UserCard = ({ post }) => {
           </button>
 
         </div>
-
       </div>
 
       {/* ================= POST IMAGE ================= */}
-      <div className="mx-auto w-full max-w-[470px] overflow-hidden">
+      <div className="relative mx-auto w-full max-w-[470px] overflow-hidden">
 
         <img
           src={post.image}
@@ -73,15 +116,47 @@ const UserCard = ({ post }) => {
           className="block aspect-square w-full object-cover"
         />
 
+        {/* ================= HIDDEN AUDIO ================= */}
+        {post.song && (
+          <audio
+            ref={audioRef}
+            src={post.song}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        )}
+
+        {/* ================= INSTAGRAM VOLUME BUTTON ================= */}
+        {post.song && (
+          <button
+            type="button"
+            onClick={handleVolume}
+            aria-label={isMuted ? "Unmute" : "Mute"}
+            className="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition active:scale-90"
+          >
+            {isMuted ? (
+              <VolumeX className="h-4 w-4" strokeWidth={2.5} />
+            ) : (
+              <Volume2 className="h-4 w-4" strokeWidth={2.5} />
+            )}
+          </button>
+        )}
+
       </div>
 
       {/* ================= POST BOTTOM ================= */}
       <div className="mx-auto w-full max-w-[470px] px-3 py-3">
 
-        {/* ACTIONS */}
+        {/* ================= ACTIONS ================= */}
         <div className="flex items-center gap-4">
 
-          <button type="button" aria-label="Like">
+          {/* LIKE */}
+          <button
+            type="button"
+            aria-label="Like"
+          >
             <svg
               viewBox="0 0 24 24"
               className="h-6 w-6"
@@ -93,7 +168,11 @@ const UserCard = ({ post }) => {
             </svg>
           </button>
 
-          <button type="button" aria-label="Comment">
+          {/* COMMENT */}
+          <button
+            type="button"
+            aria-label="Comment"
+          >
             <svg
               viewBox="0 0 24 24"
               className="h-6 w-6"
@@ -105,7 +184,11 @@ const UserCard = ({ post }) => {
             </svg>
           </button>
 
-          <button type="button" aria-label="Share">
+          {/* SHARE */}
+          <button
+            type="button"
+            aria-label="Share"
+          >
             <svg
               viewBox="0 0 24 24"
               className="h-6 w-6"
@@ -120,13 +203,16 @@ const UserCard = ({ post }) => {
 
         </div>
 
-        {/* CAPTION */}
+        {/* ================= CAPTION ================= */}
         {post.caption && (
           <p className="mt-2 text-[14px] text-black">
+
             <span className="font-semibold">
               {user?.name || "User"}
             </span>{" "}
+
             {post.caption}
+
           </p>
         )}
 
