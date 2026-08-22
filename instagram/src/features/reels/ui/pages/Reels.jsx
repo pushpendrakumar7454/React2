@@ -8,49 +8,14 @@ import {
   Volume2,
   VolumeX,
   Play,
-  Pause,
 } from "lucide-react";
-
-const reels = [
-  {
-    id: 1,
-    video:
-      "https://www.instagram.com/reel/DcUENkzzG2E/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==",
-    username: "bmarsz",
-    caption: "People really need to watch where they're going 😅",
-    likes: 221,
-    comments: 30,
-    shares: 11,
-    avatar: "https://i.pravatar.cc/100?img=12",
-  },
-
-  {
-    id: 2,
-    video:
-      "https://cdn.pixabay.com/video/2023/10/21/185801-876852430_large.mp4",
-    username: "travelworld",
-    caption: "Beautiful day 🌴",
-    likes: 540,
-    comments: 42,
-    shares: 18,
-    avatar: "https://i.pravatar.cc/100?img=32",
-  },
-
-  {
-    id: 3,
-    video:
-      "https://cdn.pixabay.com/video/2022/10/24/136058-764545544_large.mp4",
-    username: "naturelife",
-    caption: "Just enjoy the moment ❤️",
-    likes: 892,
-    comments: 76,
-    shares: 24,
-    avatar: "https://i.pravatar.cc/100?img=45",
-  },
-];
+import { useSelector } from "react-redux";
 
 const Reels = () => {
+  const { posts } = useSelector((state) => state.post);
+
   const videoRefs = useRef({});
+  const audioRefs = useRef({});
 
   const [muted, setMuted] = useState(true);
   const [playing, setPlaying] = useState({});
@@ -102,6 +67,12 @@ const Reels = () => {
         video.muted = newMuted;
       }
     });
+
+    Object.values(audioRefs.current).forEach((audio) => {
+      if (audio) {
+        audio.muted = newMuted;
+      }
+    });
   };
 
   // --------------------------------
@@ -131,54 +102,68 @@ const Reels = () => {
       {/* REELS CONTAINER */}
 
       <div className="reels-scroll h-full w-full snap-y snap-mandatory overflow-y-auto">
-        {reels.map((reel) => (
+        {posts?.map((reel) => (
           <section
             key={reel.id}
             className="flex h-screen w-full snap-start items-center justify-center"
           >
             <div className="relative flex h-full w-full items-center justify-center">
+
               {/* =========================
-                  VIDEO
+                  VIDEO / IMAGE
               ========================= */}
 
               <div className="relative h-full w-full overflow-hidden bg-black sm:h-[95vh] sm:w-[430px] sm:rounded-lg">
-                <video
-                  ref={(element) => {
-                    videoRefs.current[reel.id] = element;
-                  }}
-                  src={reel.video}
-                  autoPlay
-                  loop
-                  muted={muted}
-                  playsInline
-                  preload="auto"
-                  className="h-full w-full cursor-pointer object-cover"
-                  onClick={() => handleVideoClick(reel.id)}
-                  onPlay={() => {
-                    setPlaying((prev) => ({
-                      ...prev,
-                      [reel.id]: true,
-                    }));
-                  }}
-                  onPause={() => {
-                    setPlaying((prev) => ({
-                      ...prev,
-                      [reel.id]: false,
-                    }));
-                  }}
-                  onError={(e) => {
-                    console.log(
-                      "Video load error:",
-                      e.currentTarget.error
-                    );
-                  }}
-                />
+
+                {/* VIDEO HO TO VIDEO */}
+
+                {reel.video ? (
+                  <video
+                    ref={(element) => {
+                      videoRefs.current[reel.id] = element;
+                    }}
+                    src={reel.video}
+                    autoPlay
+                    loop
+                    muted={muted}
+                    playsInline
+                    preload="auto"
+                    className="h-full w-full cursor-pointer object-cover"
+                    onClick={() => handleVideoClick(reel.id)}
+                    onPlay={() => {
+                      setPlaying((prev) => ({
+                        ...prev,
+                        [reel.id]: true,
+                      }));
+                    }}
+                    onPause={() => {
+                      setPlaying((prev) => ({
+                        ...prev,
+                        [reel.id]: false,
+                      }));
+                    }}
+                    onError={(e) => {
+                      console.log(
+                        "Video load error:",
+                        e.currentTarget.error
+                      );
+                    }}
+                  />
+                ) : (
+                  /* PHOTO HO TO IMAGE */
+
+                  <img
+                    src={reel.image}
+                    alt={reel.name}
+                    className="h-full w-full object-cover"
+                  />
+                )}
 
                 {/* =========================
                     PLAY / PAUSE ICON
                 ========================= */}
 
-                {!playing[reel.id] && (
+                {reel.video && !playing[reel.id] && (
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                     <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/50 text-white">
                       <Play
@@ -220,14 +205,19 @@ const Reels = () => {
 
                 <div className="absolute bottom-6 left-4 right-16 z-20 text-white">
                   <div className="mb-3 flex items-center gap-2">
+
+                    {/* POST IMAGE */}
+
                     <img
-                      src={reel.avatar}
-                      alt={reel.username}
+                      src={reel.image}
+                      alt={reel.name}
                       className="h-9 w-9 rounded-full object-cover"
                     />
 
+                    {/* POST USER NAME */}
+
                     <span className="font-semibold">
-                      {reel.username}
+                      {reel.name}
                     </span>
 
                     <span className="text-gray-300">
@@ -242,13 +232,47 @@ const Reels = () => {
                     </button>
                   </div>
 
+                  {/* CAPTION */}
+
                   <p className="max-w-[350px] text-sm leading-5">
                     {reel.caption}
                   </p>
 
-                  <p className="mt-2 text-xs text-gray-300">
-                    🎵 Original audio
-                  </p>
+                  {/* =========================
+                      SONG
+                      SAME LOGIC - NO CHANGE
+                  ========================= */}
+
+                  <div className="mt-2 flex items-center gap-2 text-xs text-gray-300">
+
+                    <span>🎵</span>
+
+                    <span>
+                      {reel.songName ||
+                        reel.musicName ||
+                        reel.audioName ||
+                        "Original audio"}
+                    </span>
+
+                    {(reel.audio ||
+                      reel.song ||
+                      reel.music) && (
+                      <audio
+                        ref={(element) => {
+                          audioRefs.current[reel.id] =
+                            element;
+                        }}
+                        src={
+                          reel.audio ||
+                          reel.song ||
+                          reel.music
+                        }
+                        autoPlay
+                        loop
+                        muted={muted}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -257,11 +281,14 @@ const Reels = () => {
               ========================= */}
 
               <div className="absolute bottom-6 right-3 z-30 flex flex-col items-center gap-5 text-black sm:right-auto sm:translate-x-[260px]">
+
                 {/* LIKE */}
 
                 <button
                   type="button"
-                  onClick={() => handleLike(reel.id)}
+                  onClick={() =>
+                    handleLike(reel.id)
+                  }
                   className="flex flex-col items-center gap-1"
                 >
                   <Heart
@@ -322,7 +349,9 @@ const Reels = () => {
 
                 <button
                   type="button"
-                  onClick={() => handleSave(reel.id)}
+                  onClick={() =>
+                    handleSave(reel.id)
+                  }
                 >
                   <Bookmark
                     size={27}
@@ -347,8 +376,8 @@ const Reels = () => {
                 {/* AVATAR */}
 
                 <img
-                  src={reel.avatar}
-                  alt=""
+                  src={reel.image}
+                  alt={reel.name}
                   className="h-8 w-8 rounded-md border border-gray-300 object-cover"
                 />
               </div>
