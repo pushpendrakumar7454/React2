@@ -34,6 +34,7 @@ const Navvar = () => {
     {
       name: "Reels",
       icon: Film,
+      path:"/reels"
     },
     {
       name: "Messages",
