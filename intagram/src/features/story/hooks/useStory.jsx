@@ -11,7 +11,8 @@ export const useStory = () => {
 
     const [preview, setPreview] = useState(null)
      const [fileType, setFileType] = useState(null)
-     
+      const [showStory, setShowStory] = useState(false);
+
      const handleFileChange=(e)=>{
       let file=e.target.files?.[0]
       if(!file) return
@@ -40,6 +41,6 @@ export const useStory = () => {
         setValue,
         reset,
        storySubmit,
-       preview,handleFileChange,fileType
+       preview,handleFileChange,fileType,showStory,setShowStory
     };
 };
