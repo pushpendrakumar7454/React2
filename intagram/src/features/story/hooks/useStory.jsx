@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +8,16 @@ export const useStory = () => {
     
 
     const dispatch = useDispatch();
+
+    const [preview, setPreview] = useState(null)
+     const [fileType, setFileType] = useState(null)
+     
+     const handleFileChange=(e)=>{
+      let file=e.target.files?.[0]
+      if(!file) return
+      setPreview(URL.createObjectURL(file))
+      setFileType(file.type)
+     }
 
     const {
         register,
@@ -28,6 +39,7 @@ export const useStory = () => {
         errors,
         setValue,
         reset,
-       storySubmit
+       storySubmit,
+       preview,handleFileChange,fileType
     };
 };
