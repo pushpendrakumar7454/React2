@@ -22,6 +22,7 @@ import PostForm from "../features/posts/ui/components/PostForm";
 import StoryCreate from "../features/story/ui/components/StoryCreate";
 import StoryViewer from "../features/story/ui/components/StoryViewer";
 import Reels from "../features/reels/ui/pages/Reels";
+import Reelss from "../features/reels/ui/pages/Reelss";
 
 
 const AuthHydrate = () => {
@@ -76,7 +77,7 @@ const AppRoutes = () => {
                   element:<PostForm/>
                 },{
                   path:"reels",
-                  element:<Reels/>
+                  element:<Reelss/>
                 }
               ],
 

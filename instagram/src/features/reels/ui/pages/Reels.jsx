@@ -28,9 +28,7 @@ const Reels = () => {
 
   const handleVideoClick = (id) => {
     const video = videoRefs.current[id];
-
     if (!video) return;
-
     if (video.paused) {
       video
         .play()
