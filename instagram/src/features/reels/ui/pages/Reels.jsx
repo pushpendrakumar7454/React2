@@ -1,388 +1,553 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Heart,
   MessageCircle,
+  Repeat2,
   Send,
   Bookmark,
   MoreHorizontal,
-  Volume2,
   VolumeX,
+  Volume2,
+  Music2,
+  ChevronUp,
+  ChevronDown,
   Play,
+  Pause,
 } from "lucide-react";
-import { useSelector } from "react-redux";
 
 const Reels = () => {
   const { posts } = useSelector((state) => state.post);
+  const { user } = useSelector((state) => state.auth);
 
-  const videoRefs = useRef({});
-  const audioRefs = useRef({});
+  const containerRef = useRef(null);
+  const videoRefs = useRef([]);
+  const audioRefs = useRef([]);
 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [muted, setMuted] = useState(true);
-  const [playing, setPlaying] = useState({});
-  const [liked, setLiked] = useState({});
-  const [saved, setSaved] = useState({});
+  const [playing, setPlaying] = useState(true);
 
-  // --------------------------------
-  // VIDEO PLAY / PAUSE
-  // --------------------------------
+  // =========================
+  // CHECK VIDEO OR IMAGE
+  // =========================
 
-  const handleVideoClick = (id) => {
-    const video = videoRefs.current[id];
-    if (!video) return;
-    if (video.paused) {
-      video
-        .play()
-        .then(() => {
-          setPlaying((prev) => ({
-            ...prev,
-            [id]: true,
-          }));
-        })
-        .catch((error) => {
-          console.log("Video play error:", error);
-        });
-    } else {
-      video.pause();
+  const isVideo = (url) => {
+    if (!url) return false;
 
-      setPlaying((prev) => ({
-        ...prev,
-        [id]: false,
-      }));
+    return (
+      url.includes(".mp4") ||
+      url.includes(".webm") ||
+      url.includes(".ogg") ||
+      url.includes("video")
+    );
+  };
+
+  // =========================
+  // PLAY CURRENT REEL
+  // =========================
+
+  const playCurrentMedia = (index) => {
+    const video = videoRefs.current[index];
+    const audio = audioRefs.current[index];
+
+    // Pause all videos
+    videoRefs.current.forEach((item, i) => {
+      if (item && i !== index) {
+        item.pause();
+      }
+    });
+
+    // Pause all audios
+    audioRefs.current.forEach((item, i) => {
+      if (item && i !== index) {
+        item.pause();
+      }
+    });
+
+    // Play current video
+    if (video) {
+      video.muted = muted;
+
+      video.play().catch(() => {
+        console.log("Video autoplay blocked");
+      });
+    }
+
+    // Play current song
+    if (audio) {
+      audio.muted = muted;
+
+      audio.play().catch(() => {
+        console.log("Audio autoplay blocked");
+      });
+    }
+
+    setPlaying(true);
+  };
+
+  // =========================
+  // PLAY / PAUSE
+  // =========================
+
+  const togglePlay = (index) => {
+    const video = videoRefs.current[index];
+    const audio = audioRefs.current[index];
+
+    if (video) {
+      if (video.paused) {
+        video.play().catch(() => {});
+
+        if (audio) {
+          audio.play().catch(() => {});
+        }
+
+        setPlaying(true);
+      } else {
+        video.pause();
+
+        if (audio) {
+          audio.pause();
+        }
+
+        setPlaying(false);
+      }
+    } else if (audio) {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+        setPlaying(true);
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
     }
   };
 
-  // --------------------------------
+  // =========================
   // MUTE / UNMUTE
-  // --------------------------------
+  // =========================
 
-  const handleMute = () => {
+  const toggleMute = () => {
     const newMuted = !muted;
 
     setMuted(newMuted);
 
-    Object.values(videoRefs.current).forEach((video) => {
+    videoRefs.current.forEach((video) => {
       if (video) {
         video.muted = newMuted;
       }
     });
 
-    Object.values(audioRefs.current).forEach((audio) => {
+    audioRefs.current.forEach((audio) => {
       if (audio) {
         audio.muted = newMuted;
       }
     });
   };
 
-  // --------------------------------
-  // LIKE
-  // --------------------------------
+  // =========================
+  // SCROLL TO REEL
+  // =========================
 
-  const handleLike = (id) => {
-    setLiked((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const scrollToReel = (index) => {
+    if (!posts || index < 0 || index >= posts.length) {
+      return;
+    }
+
+    const container = containerRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    container.scrollTo({
+      top: index * window.innerHeight,
+      behavior: "smooth",
+    });
+
+    setCurrentIndex(index);
+
+    playCurrentMedia(index);
   };
 
-  // --------------------------------
-  // SAVE
-  // --------------------------------
+  // =========================
+  // PREVIOUS
+  // =========================
 
-  const handleSave = (id) => {
-    setSaved((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+  const previousReel = () => {
+    scrollToReel(currentIndex - 1);
   };
+
+  // =========================
+  // NEXT
+  // =========================
+
+  const nextReel = () => {
+    scrollToReel(currentIndex + 1);
+  };
+
+  // =========================
+  // HANDLE SCROLL
+  // =========================
+
+  const handleScroll = () => {
+    const container = containerRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    const index = Math.round(
+      container.scrollTop / window.innerHeight
+    );
+
+    if (index !== currentIndex) {
+      setCurrentIndex(index);
+
+      playCurrentMedia(index);
+    }
+  };
+
+  // =========================
+  // FIRST REEL
+  // =========================
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      playCurrentMedia(0);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [posts]);
+
+  // =========================
+  // NO POSTS
+  // =========================
+
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-white">
+        <p className="text-gray-500">
+          No posts available
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="fixed inset-0 overflow-hidden bg-white lg:pl-16">
-      {/* REELS CONTAINER */}
+    <div className="relative w-full h-screen bg-white overflow-hidden">
 
-      <div className="reels-scroll h-full w-full snap-y snap-mandatory overflow-y-auto">
-        {posts?.map((reel) => (
-          <section
-            key={reel.id}
-            className="flex h-screen w-full snap-start items-center justify-center"
-          >
-            <div className="relative flex h-full w-full items-center justify-center">
+      {/* =====================================
+          REELS CONTAINER
+      ===================================== */}
 
-              {/* =========================
-                  VIDEO / IMAGE
-              ========================= */}
+      <div
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="w-full h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      >
 
-              <div className="relative h-full w-full overflow-hidden bg-black sm:h-[95vh] sm:w-[430px] sm:rounded-lg">
+        {posts.map((post, index) => {
+          const mediaIsVideo = isVideo(post?.image);
 
-                {/* VIDEO HO TO VIDEO */}
+          return (
+            <div
+              key={post?._id || post?.id || index}
+              className="w-full h-screen snap-start shrink-0 flex justify-center items-center"
+            >
 
-                {reel.video ? (
-                  <video
-                    ref={(element) => {
-                      videoRefs.current[reel.id] = element;
-                    }}
-                    src={reel.video}
-                    autoPlay
-                    loop
-                    muted={muted}
-                    playsInline
-                    preload="auto"
-                    className="h-full w-full cursor-pointer object-cover"
-                    onClick={() => handleVideoClick(reel.id)}
-                    onPlay={() => {
-                      setPlaying((prev) => ({
-                        ...prev,
-                        [reel.id]: true,
-                      }));
-                    }}
-                    onPause={() => {
-                      setPlaying((prev) => ({
-                        ...prev,
-                        [reel.id]: false,
-                      }));
-                    }}
-                    onError={(e) => {
-                      console.log(
-                        "Video load error:",
-                        e.currentTarget.error
-                      );
-                    }}
-                  />
-                ) : (
-                  /* PHOTO HO TO IMAGE */
+              {/* =====================================
+                  REEL + RIGHT ACTIONS
+              ===================================== */}
 
-                  <img
-                    src={reel.image}
-                    alt={reel.name}
-                    className="h-full w-full object-cover"
-                  />
-                )}
+              <div className="flex items-end justify-center gap-4">
 
-                {/* =========================
-                    PLAY / PAUSE ICON
-                ========================= */}
+                {/* =====================================
+                    MEDIA
+                ===================================== */}
 
-                {reel.video && !playing[reel.id] && (
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/50 text-white">
-                      <Play
-                        size={32}
-                        fill="white"
-                      />
-                    </div>
-                  </div>
-                )}
+                <div className="relative w-[340px] h-[610px] rounded-lg overflow-hidden bg-black shadow-sm">
 
-                {/* =========================
-                    MUTE BUTTON
-                ========================= */}
+                  {/* ================= VIDEO ================= */}
 
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleMute();
-                  }}
-                  className="absolute right-4 top-4 z-30 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white"
-                >
-                  {muted ? (
-                    <VolumeX size={18} />
+                  {mediaIsVideo ? (
+                    <video
+                      ref={(el) => {
+                        videoRefs.current[index] = el;
+                      }}
+                      src={post?.image}
+                      className="w-full h-full object-cover"
+                      loop
+                      muted={muted}
+                      playsInline
+                    />
                   ) : (
-                    <Volume2 size={18} />
-                  )}
-                </button>
 
-                {/* =========================
-                    GRADIENT
-                ========================= */}
-
-                <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-
-                {/* =========================
-                    USER + CAPTION
-                ========================= */}
-
-                <div className="absolute bottom-6 left-4 right-16 z-20 text-white">
-                  <div className="mb-3 flex items-center gap-2">
-
-                    {/* POST IMAGE */}
+                    /* ================= IMAGE ================= */
 
                     <img
-                      src={reel.image}
-                      alt={reel.name}
-                      className="h-9 w-9 rounded-full object-cover"
+                      src={post?.image}
+                      alt="Post"
+                      className="w-full h-full object-cover"
                     />
 
-                    {/* POST USER NAME */}
+                  )}
 
-                    <span className="font-semibold">
-                      {reel.name}
-                    </span>
+                  {/* =====================================
+                      SONG AUDIO
+                  ===================================== */}
 
-                    <span className="text-gray-300">
-                      •
-                    </span>
+                  {post?.song && (
+                    <audio
+                      ref={(el) => {
+                        audioRefs.current[index] = el;
+                      }}
+                      src={post.song}
+                      loop
+                      muted={muted}
+                    />
+                  )}
 
-                    <button
-                      type="button"
-                      className="font-semibold text-blue-400"
+                  {/* =====================================
+                      PLAY / PAUSE
+                  ===================================== */}
+
+                  <div
+                    onClick={() => togglePlay(index)}
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                  >
+                    <div
+                      className={`w-16 h-16 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center transition-opacity ${
+                        playing && currentIndex === index
+                          ? "opacity-0 hover:opacity-100"
+                          : "opacity-100"
+                      }`}
                     >
-                      Follow
-                    </button>
+                      {playing && currentIndex === index ? (
+                        <Pause
+                          size={30}
+                          fill="white"
+                          className="text-white"
+                        />
+                      ) : (
+                        <Play
+                          size={30}
+                          fill="white"
+                          className="text-white ml-1"
+                        />
+                      )}
+                    </div>
                   </div>
 
-                  {/* CAPTION */}
+                  {/* =====================================
+                      MUTE BUTTON
+                  ===================================== */}
 
-                  <p className="max-w-[350px] text-sm leading-5">
-                    {reel.caption}
-                  </p>
-
-                  {/* =========================
-                      SONG
-                      SAME LOGIC - NO CHANGE
-                  ========================= */}
-
-                  <div className="mt-2 flex items-center gap-2 text-xs text-gray-300">
-
-                    <span>🎵</span>
-
-                    <span>
-                      {reel.songName ||
-                        reel.musicName ||
-                        reel.audioName ||
-                        "Original audio"}
-                    </span>
-
-                    {(reel.audio ||
-                      reel.song ||
-                      reel.music) && (
-                      <audio
-                        ref={(element) => {
-                          audioRefs.current[reel.id] =
-                            element;
-                        }}
-                        src={
-                          reel.audio ||
-                          reel.song ||
-                          reel.music
-                        }
-                        autoPlay
-                        loop
-                        muted={muted}
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-black/60 flex items-center justify-center z-10 hover:bg-black/75 transition"
+                  >
+                    {muted ? (
+                      <VolumeX
+                        size={18}
+                        className="text-white"
+                      />
+                    ) : (
+                      <Volume2
+                        size={18}
+                        className="text-white"
                       />
                     )}
+                  </button>
+
+                  {/* =====================================
+                      USER INFO
+                  ===================================== */}
+
+                  <div className="absolute bottom-4 left-4 text-white max-w-[270px]">
+
+                    {/* USER */}
+
+                    <div className="flex items-center gap-2 mb-2">
+
+                      <div className="w-9 h-9 rounded-full bg-gray-300 overflow-hidden border border-white/30">
+
+                        <img
+                          src={post?.image}
+                          className="w-full h-full object-cover"
+                          alt="Profile"
+                        />
+
+                      </div>
+
+                      <span className="font-semibold text-sm">
+                        {user?.name || "User"}
+                      </span>
+
+                      <span className="text-blue-400 text-sm">
+                        • Follow
+                      </span>
+
+                    </div>
+
+                    {/* CAPTION */}
+
+                    {post?.caption && (
+                      <p className="text-sm mb-2">
+                        {post.caption}
+                      </p>
+                    )}
+
+                    {/* SONG */}
+
+                    {post?.song && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <Music2 size={14} />
+
+                        <span>
+                          Original audio
+                        </span>
+                      </div>
+                    )}
+
                   </div>
+
                 </div>
-              </div>
 
-              {/* =========================
-                  RIGHT ACTIONS
-              ========================= */}
+                {/* =====================================
+                    RIGHT ACTIONS
+                ===================================== */}
 
-              <div className="absolute bottom-6 right-3 z-30 flex flex-col items-center gap-5 text-black sm:right-auto sm:translate-x-[260px]">
+                <div className="w-11 flex flex-col items-center gap-4 pb-2">
 
-                {/* LIKE */}
+                  {/* LIKE */}
 
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleLike(reel.id)
-                  }
-                  className="flex flex-col items-center gap-1"
-                >
-                  <Heart
-                    size={27}
-                    strokeWidth={1.8}
-                    fill={
-                      liked[reel.id]
-                        ? "red"
-                        : "none"
-                    }
-                    className={
-                      liked[reel.id]
-                        ? "text-red-500"
-                        : "text-black"
-                    }
-                  />
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <Heart
+                      size={27}
+                      strokeWidth={2}
+                      className="hover:scale-110 transition-transform"
+                    />
 
-                  <span className="text-xs">
-                    {liked[reel.id]
-                      ? reel.likes + 1
-                      : reel.likes}
-                  </span>
-                </button>
+                    <span className="text-xs mt-1 text-gray-800">
+                      {post?.likes?.length || 0}
+                    </span>
+                  </div>
 
-                {/* COMMENT */}
+                  {/* COMMENT */}
 
-                <button
-                  type="button"
-                  className="flex flex-col items-center gap-1"
-                >
-                  <MessageCircle
-                    size={27}
-                    strokeWidth={1.8}
-                  />
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <MessageCircle
+                      size={27}
+                      strokeWidth={2}
+                      className="hover:scale-110 transition-transform"
+                    />
 
-                  <span className="text-xs">
-                    {reel.comments}
-                  </span>
-                </button>
+                    <span className="text-xs mt-1 text-gray-800">
+                      {post?.comments?.length || 0}
+                    </span>
+                  </div>
 
-                {/* SHARE */}
+                  {/* REPOST */}
 
-                <button
-                  type="button"
-                  className="flex flex-col items-center gap-1"
-                >
+                  <div className="flex flex-col items-center cursor-pointer">
+                    <Repeat2
+                      size={27}
+                      strokeWidth={2}
+                      className="hover:scale-110 transition-transform"
+                    />
+
+                    <span className="text-xs mt-1 text-gray-800">
+                      {post?.reposts?.length || 0}
+                    </span>
+                  </div>
+
+                  {/* SHARE */}
+
                   <Send
                     size={27}
-                    strokeWidth={1.8}
+                    strokeWidth={2}
+                    className="cursor-pointer hover:scale-110 transition-transform"
                   />
 
-                  <span className="text-xs">
-                    {reel.shares}
-                  </span>
-                </button>
+                  {/* SAVE */}
 
-                {/* SAVE */}
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    handleSave(reel.id)
-                  }
-                >
                   <Bookmark
                     size={27}
-                    strokeWidth={1.8}
-                    fill={
-                      saved[reel.id]
-                        ? "black"
-                        : "none"
-                    }
+                    strokeWidth={2}
+                    className="cursor-pointer hover:scale-110 transition-transform"
                   />
-                </button>
 
-                {/* MORE */}
+                  {/* MORE */}
 
-                <button type="button">
                   <MoreHorizontal
                     size={27}
-                    strokeWidth={1.8}
+                    strokeWidth={2}
+                    className="cursor-pointer hover:scale-110 transition-transform"
                   />
-                </button>
 
-                {/* AVATAR */}
+                  {/* MUSIC */}
 
-                <img
-                  src={reel.image}
-                  alt={reel.name}
-                  className="h-8 w-8 rounded-md border border-gray-300 object-cover"
-                />
+                  <div className="w-8 h-8 rounded-md overflow-hidden mt-1 border border-gray-300">
+                    <img
+                      src={post?.image}
+                      alt=""
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                </div>
+
               </div>
+
             </div>
-          </section>
-        ))}
+          );
+        })}
+
       </div>
+
+      {/* =====================================
+          UP / DOWN NAVIGATION
+      ===================================== */}
+
+      <div className="fixed right-5 top-1/2 -translate-y-1/2 flex flex-col gap-3">
+
+        {/* UP */}
+
+        <button
+          onClick={previousReel}
+          disabled={currentIndex === 0}
+          className="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center disabled:opacity-40 hover:shadow-lg transition"
+        >
+          <ChevronUp size={24} />
+        </button>
+
+        {/* DOWN */}
+
+        <button
+          onClick={nextReel}
+          disabled={currentIndex === posts.length - 1}
+          className="w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center disabled:opacity-40 hover:shadow-lg transition"
+        >
+          <ChevronDown size={24} />
+        </button>
+
+      </div>
+
+      {/* =====================================
+          MESSAGES
+      ===================================== */}
+
+      <button className="fixed right-8 bottom-5 w-52 h-12 rounded-full bg-white shadow-md flex items-center justify-center gap-3 font-semibold">
+        <Send size={21} />
+        Messages
+      </button>
+
     </div>
   );
 };
