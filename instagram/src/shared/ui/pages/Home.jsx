@@ -1,10 +1,9 @@
 import React, { useContext, useEffect } from "react";
 
-import Story from "../components/Story";
-import Post from "../components/Post";
+
 
 import FollowSuggestion from "../components/FollowSuggestion";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import UserCard from "../../../features/posts/ui/components/UserCard";
 import { data } from "react-router";
 import StoryBar from "../../../features/story/ui/components/StoryBar";
