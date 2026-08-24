@@ -5,8 +5,11 @@ import {
   Bookmark,
   UserSquare2,
 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Posts = () => {
+
+    const{posts}=useSelector((state)=>state.post)
   return (
     <div className="w-full">
       {/* Tabs */}
@@ -28,62 +31,18 @@ const Posts = () => {
         </div>
       </div>
 
+      <div className="grid grid-cols-3 gap-1 pb-4">
       {/* Posts */}
-      <div className="grid grid-cols-3 gap-1">
-        <img
-          src="https://images.unsplash.com/photo-1500534623283-312aade485b7?w=600"
+     {posts.map((post)=>{
+       return <img
+          src={post.image}
           className="aspect-square w-full object-cover"
           alt="post"
-        />
+        />        
 
-        <img
-          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-
-        <img
-          src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600"
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />
-      </div>
+       
+    })}
+    </div>
     </div>
   );
 };
