@@ -4,12 +4,13 @@ import {
   Clapperboard,
   Bookmark,
   UserSquare2,
+  VolumeX,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Posts = () => {
+  const { posts } = useSelector((state) => state.post);
 
-    const{posts}=useSelector((state)=>state.post)
   return (
     <div className="w-full">
       {/* Tabs */}
@@ -31,18 +32,48 @@ const Posts = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-1 pb-4">
       {/* Posts */}
-     {posts.map((post)=>{
-       return <img
-          src={post.image}
-          className="aspect-square w-full object-cover"
-          alt="post"
-        />        
+      <div className="grid grid-cols-3 gap-1 pb-4">
+        {posts.map((post) => {
+          const isVideo =
+            post?.mediaType === "video" ||
+            post?.image?.startsWith("data:video/");
 
-       
-    })}
-    </div>
+          return (
+            <div
+              key={post.id}
+              className="relative aspect-square w-full overflow-hidden bg-gray-100"
+            >
+              {isVideo ? (
+                <video
+                  src={post.image}
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <img
+                  src={post.image}
+                  alt="post"
+                  className="h-full w-full object-cover"
+                />
+              )}
+
+              {/* Volume Button */}
+                {!isVideo && (
+       <button
+      type="button"
+      className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white"
+    >
+      <VolumeX size={16} strokeWidth={2.5} />
+    </button>
+  )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
