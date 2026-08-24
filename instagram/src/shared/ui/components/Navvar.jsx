@@ -52,6 +52,7 @@ const Navvar = () => {
     {
       name: "Profile",
       icon: User,
+      path:"/profile"
     },
   ];
 

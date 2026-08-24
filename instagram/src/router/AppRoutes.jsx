@@ -23,6 +23,7 @@ import StoryCreate from "../features/story/ui/components/StoryCreate";
 import StoryViewer from "../features/story/ui/components/StoryViewer";
 import Reels from "../features/reels/ui/pages/Reels";
 import Reelss from "../features/reels/ui/pages/Reels";
+import Profile from "../shared/ui/pages/Profile";
 
 
 const AuthHydrate = () => {
@@ -78,6 +79,9 @@ const AppRoutes = () => {
                 },{
                   path:"reels",
                   element:<Reels/>
+                },{
+                  path:"profile",
+                  element:<Profile/>
                 }
               ],
 
