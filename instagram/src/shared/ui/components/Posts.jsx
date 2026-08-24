@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Grid3X3,
   Clapperboard,
   Bookmark,
   UserSquare2,
   VolumeX,
+  Volume2,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Posts = () => {
   const { posts } = useSelector((state) => state.post);
+
+  const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const handleVolume = () => {
+    if (videoRef.current) {
+      if (isMuted) {
+        videoRef.current.play();
+
+        setIsMuted(false);
+      } else {
+        videoRef.current.pause();
+
+        setIsMuted(true);
+      }
+    }
+  };
 
   return (
     <div className="w-full">
@@ -54,22 +72,44 @@ const Posts = () => {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <img
-                  src={post.image}
-                  alt="post"
-                  className="h-full w-full object-cover"
-                />
-              )}
+                <>
+                  <img
+                    src={post.image}
+                    alt="post"
+                    className="h-full w-full object-cover"
+                  />
 
-              {/* Volume Button */}
-                {!isVideo && (
-       <button
-      type="button"
-      className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white"
-    >
-      <VolumeX size={16} strokeWidth={2.5} />
-    </button>
-  )}
+                  {/* Song */}
+                  {post.song && (
+                    <audio
+                      ref={videoRef}
+                      src={post.song}
+                      loop
+                    />
+                  )}
+
+                  {/* Volume Button */}
+                  {post.song && (
+                    <button
+                      type="button"
+                      onClick={() => handleVolume(post)}
+                      className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white"
+                    >
+                      {isMuted ? (
+                        <VolumeX
+                          size={16}
+                          strokeWidth={2.5}
+                        />
+                      ) : (
+                        <Volume2
+                          size={16}
+                          strokeWidth={2.5}
+                        />
+                      )}
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           );
         })}
