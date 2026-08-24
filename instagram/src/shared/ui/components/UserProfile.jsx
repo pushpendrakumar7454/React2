@@ -41,7 +41,7 @@ const UserProfile = () => {
         {/* Details */}
         <div className="flex-1">
           <div className="mb-5 flex flex-wrap items-center gap-3">
-            <h2 className="text-xl capitalize">{user.name}</h2>
+            <h2 className="text-xl capitalize">{user.username}</h2>
 
             <button className="rounded-lg bg-gray-100 px-4 py-2 text-sm font-semibold">
               Edit profile
@@ -65,7 +65,7 @@ const UserProfile = () => {
 
           {/* Bio */}
           <div className="hidden sm:block">
-            <p className="font-semibold">Your Name</p>
+            <p className="font-semibold capitalize">{user.name}</p>
             <p className="text-sm">Web Developer 💻</p>
             <p className="text-sm">React • JavaScript • Node.js</p>
             <p className="text-sm">Building something awesome 🚀</p>
