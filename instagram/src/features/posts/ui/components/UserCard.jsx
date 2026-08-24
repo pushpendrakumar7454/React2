@@ -8,6 +8,13 @@ const UserCard = ({ post }) => {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
 
+  // ================= CHECK VIDEO =================
+  const isVideo =
+    post?.mediaType === "video" ||
+    post?.image?.startsWith("data:video/") ||
+    post?.image?.startsWith("blob:");
+
+  // ================= SONG PLAY =================
   useEffect(() => {
     if (!post?.song || !audioRef.current) return;
 
@@ -16,9 +23,11 @@ const UserCard = ({ post }) => {
     audio.muted = true;
     audio.loop = true;
 
-    audio.play().catch((error) => {
-      console.log("Autoplay blocked by browser:", error);
-    });
+    audio
+      .play()
+      .catch((error) => {
+        console.log("Autoplay blocked by browser:", error);
+      });
 
     return () => {
       audio.pause();
@@ -26,7 +35,7 @@ const UserCard = ({ post }) => {
     };
   }, [post?.song]);
 
-  // ================= VOLUME BUTTON =================
+  // ================= VOLUME =================
   const handleVolume = () => {
     if (!audioRef.current) return;
 
@@ -53,7 +62,12 @@ const UserCard = ({ post }) => {
         <div className="flex min-w-0 items-center gap-2.5">
 
           <img
-            src={user?.profileImage || post?.image}
+            src={
+              user?.profileImage ||
+              user?.profilePic ||
+              user?.image ||
+              "https://i.pravatar.cc/150?img=12"
+            }
             alt="Profile"
             className="h-9 w-9 shrink-0 rounded-full object-cover"
           />
@@ -61,7 +75,7 @@ const UserCard = ({ post }) => {
           <div className="flex min-w-0 items-center gap-1.5">
 
             <span className="truncate text-[14px] font-semibold text-black">
-              {user?.name || "User"}
+              {user?.name || user?.username || "User"}
             </span>
 
             <span className="text-[13px] text-gray-400">
@@ -106,16 +120,15 @@ const UserCard = ({ post }) => {
       {/* ================= POST MEDIA ================= */}
       <div className="relative mx-auto w-full max-w-[470px] overflow-hidden">
 
-        {/* VIDEO */}
-        {post?.mediaType === "video" ? (
+        {isVideo ? (
           <video
             src={post?.image}
             controls
             playsInline
+            preload="metadata"
             className="block aspect-square w-full object-cover"
           />
         ) : (
-          /* IMAGE */
           <img
             src={post?.image}
             alt="Post"
@@ -123,7 +136,7 @@ const UserCard = ({ post }) => {
           />
         )}
 
-        {/* ================= HIDDEN AUDIO ================= */}
+        {/* ================= SONG ================= */}
         {post?.song && (
           <audio
             ref={audioRef}
@@ -221,7 +234,7 @@ const UserCard = ({ post }) => {
           <p className="mt-2 text-[14px] text-black">
 
             <span className="font-semibold">
-              {user?.name || "User"}
+              {user?.name || user?.username || "User"}
             </span>{" "}
 
             {post.caption}
