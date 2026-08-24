@@ -8,7 +8,6 @@ const UserCard = ({ post }) => {
   const audioRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
 
-  
   useEffect(() => {
     if (!post?.song || !audioRef.current) return;
 
@@ -17,11 +16,9 @@ const UserCard = ({ post }) => {
     audio.muted = true;
     audio.loop = true;
 
-    audio
-      .play()
-      .catch((error) => {
-        console.log("Autoplay blocked by browser:", error);
-      });
+    audio.play().catch((error) => {
+      console.log("Autoplay blocked by browser:", error);
+    });
 
     return () => {
       audio.pause();
@@ -39,7 +36,6 @@ const UserCard = ({ post }) => {
       audio.muted = false;
       setIsMuted(false);
 
-      // Agar autoplay ki wajah se song play nahi hua tha
       audio.play().catch(() => {});
     } else {
       audio.muted = true;
@@ -57,7 +53,7 @@ const UserCard = ({ post }) => {
         <div className="flex min-w-0 items-center gap-2.5">
 
           <img
-            src={post.image}
+            src={user?.profileImage || post?.image}
             alt="Profile"
             className="h-9 w-9 shrink-0 rounded-full object-cover"
           />
@@ -107,17 +103,28 @@ const UserCard = ({ post }) => {
         </div>
       </div>
 
-      {/* ================= POST IMAGE ================= */}
+      {/* ================= POST MEDIA ================= */}
       <div className="relative mx-auto w-full max-w-[470px] overflow-hidden">
 
-        <img
-          src={post.image}
-          alt="Post"
-          className="block aspect-square w-full object-cover"
-        />
+        {/* VIDEO */}
+        {post?.mediaType === "video" ? (
+          <video
+            src={post?.image}
+            controls
+            playsInline
+            className="block aspect-square w-full object-cover"
+          />
+        ) : (
+          /* IMAGE */
+          <img
+            src={post?.image}
+            alt="Post"
+            className="block aspect-square w-full object-cover"
+          />
+        )}
 
         {/* ================= HIDDEN AUDIO ================= */}
-        {post.song && (
+        {post?.song && (
           <audio
             ref={audioRef}
             src={post.song}
@@ -128,8 +135,8 @@ const UserCard = ({ post }) => {
           />
         )}
 
-        {/* ================= INSTAGRAM VOLUME BUTTON ================= */}
-        {post.song && (
+        {/* ================= VOLUME BUTTON ================= */}
+        {post?.song && (
           <button
             type="button"
             onClick={handleVolume}
@@ -137,9 +144,15 @@ const UserCard = ({ post }) => {
             className="absolute bottom-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-sm transition active:scale-90"
           >
             {isMuted ? (
-              <VolumeX className="h-4 w-4" strokeWidth={2.5} />
+              <VolumeX
+                className="h-4 w-4"
+                strokeWidth={2.5}
+              />
             ) : (
-              <Volume2 className="h-4 w-4" strokeWidth={2.5} />
+              <Volume2
+                className="h-4 w-4"
+                strokeWidth={2.5}
+              />
             )}
           </button>
         )}
@@ -204,7 +217,7 @@ const UserCard = ({ post }) => {
         </div>
 
         {/* ================= CAPTION ================= */}
-        {post.caption && (
+        {post?.caption && (
           <p className="mt-2 text-[14px] text-black">
 
             <span className="font-semibold">
