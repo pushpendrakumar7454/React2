@@ -1,39 +1,6 @@
 import React from "react";
 
-const OtherStory = () => {
-  const stories = [
-    {
-      id: 1,
-      username: "rahul",
-      image: "https://i.pravatar.cc/150?img=12",
-    },
-    {
-      id: 2,
-      username: "priya",
-      image: "https://i.pravatar.cc/150?img=32",
-    },
-    {
-      id: 3,
-      username: "rohit",
-      image: "https://i.pravatar.cc/150?img=13",
-    },
-    {
-      id: 4,
-      username: "neha",
-      image: "https://i.pravatar.cc/150?img=44",
-    },
-    {
-      id: 5,
-      username: "aman",
-      image: "https://i.pravatar.cc/150?img=15",
-    },
-    {
-      id: 6,
-      username: "sakshi",
-      image: "https://i.pravatar.cc/150?img=47",
-    },
-  ];
-
+const OtherStory = ({ stories, onStoryClick }) => {
   return (
     <div className="w-full overflow-x-auto scrollbar-hide">
       <div className="flex gap-4 px-2 py-3">
@@ -41,6 +8,7 @@ const OtherStory = () => {
         {stories.map((story) => (
           <div
             key={story.id}
+            onClick={() => onStoryClick(story)}
             className="flex w-[72px] shrink-0 cursor-pointer flex-col items-center"
           >
             {/* Story Circle */}

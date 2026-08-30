@@ -1,52 +1,79 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { X, Plus } from "lucide-react";
 
 const StoryViewer = ({ stories, onClose, onAddStory }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
 
+  const videoRef = useRef(null);
+
+  const story = stories[currentIndex];
+
+  // URL ek baar create hoga
+  const storyUrl = useMemo(() => {
+    if (!story) return null;
+
+    return URL.createObjectURL(story);
+  }, [story]);
+
+  // URL cleanup
+  useEffect(() => {
+    return () => {
+      if (storyUrl) {
+        URL.revokeObjectURL(storyUrl);
+      }
+    };
+  }, [storyUrl]);
+
+  // Video ko play karna
+  useEffect(() => {
+    if (!story) return;
+
+    if (story.type.startsWith("video/")) {
+      const video = videoRef.current;
+      if (!video) return;
+      video.load();
+      video.play()
+        .then(() => {
+          console.log("VIDEO PLAYING");
+        })
+        .catch((error) => {
+          console.log("VIDEO ERROR:", error);
+        });
+    }
+  }, [currentIndex, story]);
+
   // Story progress
   useEffect(() => {
-    if (!stories || stories.length === 0) return;
+    if (!story) return;
 
     setProgress(0);
 
-    const duration = 5000; // 5 seconds
-    const intervalTime = 50;
-
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const nextProgress =
-          prev + (100 * intervalTime) / duration;
-
-        if (nextProgress >= 100) {
+        if (prev >= 100) {
           clearInterval(interval);
 
-          // Next story
           if (currentIndex < stories.length - 1) {
             setCurrentIndex((prev) => prev + 1);
           } else {
-            // Last story ke baad close
             onClose();
           }
 
           return 100;
         }
 
-        return nextProgress;
+        return prev + 1;
       });
-    }, intervalTime);
+    }, 50);
 
     return () => clearInterval(interval);
-  }, [currentIndex, stories, onClose]);
+  }, [currentIndex, story, stories.length, onClose]);
 
-  if (!stories || stories.length === 0) {
+  if (!stories.length || !story) {
     return null;
   }
 
-  const story = stories[currentIndex];
-
-  // Next button
   const nextStory = () => {
     if (currentIndex < stories.length - 1) {
       setCurrentIndex((prev) => prev + 1);
@@ -55,7 +82,6 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
     }
   };
 
-  // Previous button
   const previousStory = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1);
@@ -65,14 +91,12 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
 
-      {/* =========================
-          PROGRESS BARS
-      ========================== */}
+      {/* Progress */}
       <div className="absolute left-3 right-3 top-3 z-50 flex gap-1">
         {stories.map((_, index) => (
           <div
             key={index}
-            className="h-1 flex-1 overflow-hidden rounded-full bg-gray-600"
+            className="h-1 flex-1 rounded-full bg-gray-600"
           >
             <div
               className="h-full rounded-full bg-white"
@@ -89,9 +113,7 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
         ))}
       </div>
 
-      {/* =========================
-          CLOSE BUTTON
-      ========================== */}
+      {/* Close */}
       <button
         onClick={onClose}
         className="absolute right-5 top-8 z-50 text-white"
@@ -99,32 +121,30 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
         <X size={30} />
       </button>
 
-      {/* =========================
-          STORY IMAGE / VIDEO
-      ========================== */}
+      {/* Story */}
       <div className="h-full w-full max-w-md">
+
         {story.type.startsWith("image/") ? (
           <img
-            key={currentIndex}
-            src={URL.createObjectURL(story)}
+            src={storyUrl}
             alt="Story"
             className="h-full w-full object-contain"
           />
         ) : (
           <video
-            key={currentIndex}
-            src={URL.createObjectURL(story)}
+            ref={videoRef}
+            src={storyUrl}
             className="h-full w-full object-contain"
-            autoPlay
             muted
+            playsInline
+            autoPlay
             controls
           />
         )}
+
       </div>
 
-      {/* =========================
-          PREVIOUS BUTTON
-      ========================== */}
+      {/* Previous */}
       {currentIndex > 0 && (
         <button
           onClick={previousStory}
@@ -134,9 +154,7 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
         </button>
       )}
 
-      {/* =========================
-          NEXT BUTTON
-      ========================== */}
+      {/* Next */}
       {currentIndex < stories.length - 1 && (
         <button
           onClick={nextStory}
@@ -146,9 +164,7 @@ const StoryViewer = ({ stories, onClose, onAddStory }) => {
         </button>
       )}
 
-      {/* =========================
-          ADD STORY BUTTON
-      ========================== */}
+      {/* Add Story */}
       <button
         onClick={onAddStory}
         className="absolute bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white"

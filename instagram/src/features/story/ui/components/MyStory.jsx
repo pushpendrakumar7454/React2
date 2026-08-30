@@ -4,51 +4,59 @@ import StoryViewer from "./StoryViewer";
 
 const MyStory = () => {
   const [stories, setStories] = useState([]);
-  const [showStory, setShowStory] = useState(false);
+  const [showViewer, setShowViewer] = useState(false);
 
   const fileInputRef = useRef(null);
 
-  // File select hone par
-  const submit = (e) => {
+  // File select
+  const handleChange = (e) => {
     const file = e.target.files[0];
+
     if (file) {
       setStories((prev) => [...prev, file]);
     }
-    // Same file dobara select karne ke liye
+
     e.target.value = "";
   };
 
-  // Story circle par click
-  const handleStoryClick = () => {
+  // File picker open
+  const handleClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // Story open
+  const openStory = () => {
     if (stories.length > 0) {
-      // Story already hai → Viewer open
-      setShowStory(true);
-    } else {
-      // Story nahi hai → File picker open
-      fileInputRef.current.click();
+      setShowViewer(true);
     }
   };
 
-  // Viewer ke + button se new story
-  const handleAddStory = () => {
-    fileInputRef.current.click();
+  // Story close
+  const closeStory = () => {
+    setShowViewer(false);
   };
 
   return (
     <div className="mt-4 w-full">
 
-      {/* Story Circle */}
-      <div
-        onClick={handleStoryClick}
-        className="relative h-15 w-15 cursor-pointer rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[3px]"
-      >
-        <div className="h-full w-full overflow-hidden rounded-full border-2 border-white bg-gray-100">
+      {/* Story */}
+      <div className="relative w-fit">
 
-          {stories.length > 0 ? (
-            stories[0].type.startsWith("image/") ? (
+        {/* Story Circle */}
+        <div
+          onClick={stories.length > 0 ? openStory : handleClick}
+          className="relative h-15 w-15 cursor-pointer rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 p-[3px]"
+        >
+          <div className="h-full w-full overflow-hidden rounded-full border-2 border-white bg-gray-100">
+
+            {stories.length === 0 ? (
+              <div className="flex h-full w-full items-center justify-center">
+                <Plus size={20} />
+              </div>
+            ) : stories[0].type.startsWith("image/") ? (
               <img
                 src={URL.createObjectURL(stories[0])}
-                alt="Story"
+                alt="story"
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -56,20 +64,29 @@ const MyStory = () => {
                 src={URL.createObjectURL(stories[0])}
                 className="h-full w-full object-cover"
                 muted
+                playsInline
               />
-            )
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <Plus size={30} className="text-gray-600" />
-            </div>
-          )}
+            )}
 
+          </div>
         </div>
 
-        {/* Plus Icon */}
-        <div className="pointer-events-none absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-blue-500 text-white">
+        {/* PLUS BUTTON */}
+        <button
+          onClick={handleClick}
+          className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-blue-500 text-white"
+        >
           <Plus size={15} />
-        </div>
+        </button>
+
+        {/* Hidden Input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*,video/*"
+          onChange={handleChange}
+          className="hidden"
+        />
       </div>
 
       {/* Name */}
@@ -77,21 +94,12 @@ const MyStory = () => {
         Your Story
       </p>
 
-      {/* Hidden File Input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*,video/*"
-        onChange={submit}
-        className="hidden"
-      />
-
       {/* Story Viewer */}
-      {showStory && (
+      {showViewer && (
         <StoryViewer
           stories={stories}
-          onClose={() => setShowStory(false)}
-          onAddStory={handleAddStory}
+          onClose={closeStory}
+          onAddStory={handleClick}
         />
       )}
     </div>
