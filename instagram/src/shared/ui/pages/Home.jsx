@@ -5,10 +5,7 @@ import React, { useContext, useEffect } from "react";
 import FollowSuggestion from "../components/FollowSuggestion";
 import {  useSelector } from "react-redux";
 import UserCard from "../../../features/posts/ui/components/UserCard";
-import { data } from "react-router";
-import StoryBar from "../../../features/story/ui/components/StoryBar";
 import Alllstory from "../../../features/story/ui/pages/Alllstory";
-import { addPost } from "../../../features/posts/state/postSlice";
 
 
 

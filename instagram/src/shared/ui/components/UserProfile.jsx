@@ -16,7 +16,7 @@ const UserProfile = () => {
     <div className="w-full">
       {/* Top Header */}
       <div className="flex h-16 items-center justify-between border-b border-gray-200 md:border-none">
-        <h1 className="text-xl font-semibold">username</h1>
+        <h1 className="text-xl font-semibold"></h1>
 
         <div className="flex items-center gap-5">
           <Plus size={25} />
