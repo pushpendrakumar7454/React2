@@ -18,25 +18,10 @@ const InstagramLogo = () => {
 const Register = () => {
   const { register, handleSubmit } = useAuth();
 
-  const registerUserForm = async (data) => {
-    try {
-      console.log("Form data:", data);
-      const response = await axios.post(
-        "http://localhost:3000/user/registeruser",
-        data
-      );
+  const registerUserForm = (data) => {
+  
 
-      console.log("Backend response:", response.data);
-
-      alert("User registered successfully");
-
-    } catch (error) {
-      console.log("Register error:", error);
-
-      alert(
-        error.response?.data?.message || "Registration failed"
-      );
-    }
+    console.log(data)
   };
 
   return (

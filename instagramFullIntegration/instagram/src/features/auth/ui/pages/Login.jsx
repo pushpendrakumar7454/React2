@@ -34,37 +34,10 @@ const Login = () => {
     formState: { errors }
   } = useForm();
 
-  const loginUserForm = async (data) => {
-    try {
-      console.log("Login data:", data);
-
-      const response = await axios.post(
-        "http://localhost:3000/user/me",
-        data
-      );
-
-      console.log("Login response:", response.data);
-
-      // Redux me user save
-      dispatch(addUser(response.data.user));
-
-      // Refresh ke baad bhi user available rahe
-      localStorage.setItem(
-        "user",
-        JSON.stringify(response.data.user)
-      );
-
-      // Home page par redirect
-      navigate("/");
-
-    } catch (error) {
-      console.log("Login error:", error);
-
-      alert(
-        error.response?.data?.message ||
-        "Login failed"
-      );
-    }
+  const loginUserForm = (data) => {
+   
+      console.log(data)
+    
   };
 
   return (
@@ -77,7 +50,15 @@ const Login = () => {
 
           <div className="w-full flex flex-col pt-14">
 
-            {/* Instagram Logo */}
+            {/* Instagram Loonsole.log("Login response:", response.data);
+
+      // Redux me user save
+      dispatch(addUser(response.data.user));
+
+      // Refresh ke baad bhi user available rahe
+      localStorage.setItem(
+        "user",
+        JSON.stringify(respgo */}
             <div className="px-14">
               <InstagramLogo />
             </div>
