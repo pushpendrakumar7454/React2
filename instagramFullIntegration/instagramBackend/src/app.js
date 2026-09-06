@@ -15,6 +15,6 @@ app.get('/', (req, res) => {
     res.send("ok got it")
 })
 
-app.use('/user', userRouter)
+app.use('/api/auth', userRouter)
 
 module.exports = app
