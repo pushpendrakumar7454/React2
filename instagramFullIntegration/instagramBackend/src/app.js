@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors({
     origin: "*"
 }))
-connectDb()
+
 
 app.get('/', (req, res) => {
     res.send("ok got it")
