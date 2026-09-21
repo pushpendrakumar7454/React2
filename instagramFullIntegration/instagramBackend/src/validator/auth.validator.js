@@ -59,7 +59,7 @@ export const registerValidator = [
 ]
 
 
-const loginvalidator = [
+export const loginvalidator = [
 
     body("email")
         .exists()

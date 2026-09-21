@@ -1,4 +1,4 @@
-const dotenv = require("dotenv")
+import dotenv from 'dotenv'
 dotenv.config()
 const config = {
     PORT:process.env.PORT,
@@ -6,4 +6,6 @@ const config = {
     ACCESS_TOKEN: process.env.JWT_ACCESS_TOKEN,
     REFRESH_TOKEN:process.env.JWT_REFRESH_TOKEN
 }
-module.exports = config
+
+
+export default config
