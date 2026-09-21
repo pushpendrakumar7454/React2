@@ -8,7 +8,7 @@ export const authRegisterController=async(req,res)=>{
           
 
            const allreadyExsitsEmail=await userModel.findOne({email})
-           
+
            if(allreadyExsitsEmail){
             return res.status(400).json({
                 message:"email allready exists"
@@ -26,11 +26,11 @@ export const authRegisterController=async(req,res)=>{
           const accessToken= generateAccessToken({userId:user._id})
           const refreshToken= generateRefreshToken({userId:user._id})
 
-          res.cookie("refreshToken",{
+          res.cookie("refreshToken",refreshToken,{
             httpOnly:true
           })
 
-          await userModel.findByIdAndUpdate(user._id,{reshreshToken})
+          await userModel.findByIdAndUpdate(user._id,{refreshToken})
 
           return res.status(201).json({
             message:"user register succefully",
