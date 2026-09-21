@@ -84,7 +84,7 @@ export const authLoginController=async(req,res)=>{
         await userModel.findOneAndUpdate({emai},{refreshToken})
 
         return res.status(200).json({
-            message:"user ogin succefully",
+            message:"user login succefully",
             data:{
                 user:{
                     name:user.name,
