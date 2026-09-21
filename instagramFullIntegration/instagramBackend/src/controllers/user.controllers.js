@@ -1,6 +1,6 @@
 import userModel from "../module/user.module.js"
 import bcrypt from 'bcrypt'
-import { generateAccessToken, generateRefreshToken } from "../utils/auth.js"
+import { generateAccessToken, generateRefreshToken, readRefreshToken } from "../utils/auth.js"
 
 export const authRegisterController=async(req,res)=>{
     try {
@@ -57,7 +57,7 @@ export const authRegisterController=async(req,res)=>{
 
 export const authLoginController=async(req,res)=>{
     try {
-        const {email,passowrd}=req.body
+        const {email,password}=req.body
 
         const user=await userModel.findOne({email})
         if(!user){
@@ -81,18 +81,75 @@ export const authLoginController=async(req,res)=>{
             httpOny:true
         })
 
-        await userModel.findOneAndUpdate({emai},{refreshToken})
+        await userModel.findOneAndUpdate({email},{refreshToken})
 
         return res.status(200).json({
             message:"user login succefully",
             data:{
                 user:{
                     name:user.name,
-                    email:user.emai,
+                    email:user.email,
                     id:user._id
-                }
+                },
+                accessToken
             }
         })
+
+    } catch (error) {
+        return res.status(500).json({
+            message:"internal server error"
+        })
+    }
+}
+
+
+export const authRefreshController=async(req,res)=>{
+    
+    const refreshToken=req.cookies.refreshToken
+    if(!refreshToken){
+        return res.status(400).json({
+            message:"refresh Token nott found"
+        })
+    }
+
+    try {
+       
+    const decoded=readRefreshToken(refreshToken)
+     const {userId}=decoded
+
+     const user=await userModel.findById(userId)
+     if(!user){
+        return res.status(400).json({
+            message:"user not found"
+        })
+     }
+       
+     if(refreshToken!==user.refreshToken){
+        await userModel.findByIdAndUpdate(user._id,{refreshToken:null})
+     }
+
+     const accessToken= generateAccessToken({userId:user._id})
+     const newRefreshToken=generateRefreshToken({userId:user._id})
+        
+      res.cookie("refreshToken",newRefreshToken,{
+        httpOnly:true
+      })
+
+      await userModel.findByIdAndUpdate(user._id,{newRefreshToken})
+
+      return res.status(200).json({
+        message:"refreshToken roteted",
+        data:{
+            user:{
+                name:user.name,
+                email:user.email,
+                number:user.number,
+                id:user._id,
+                username:user.username
+            },
+            accessToken
+        }
+      })
 
     } catch (error) {
         return res.status(500).json({
