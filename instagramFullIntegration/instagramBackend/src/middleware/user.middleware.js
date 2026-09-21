@@ -1,4 +1,4 @@
-import { readAccessToken } from "../utils/auth"
+import { readAccessToken } from "../utils/auth.js"
 
 
 
