@@ -9,7 +9,7 @@ const registerValidator=[
     .isString().withMessage("email must be string"),
       
 
-     body("name")
+     body("userna")
 
     body("number")
     .exists().withMessage("phone enumber is required").bail()
