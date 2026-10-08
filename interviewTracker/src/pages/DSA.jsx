@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FiCheckCircle, FiCircle, FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router";
-import { toggleTask } from "../features/tracker/trackerSlice";
+import { toggleTask } from "../features/tracker/trackerSlice.js";
 
 const DSA = () => {
   const dispatch = useDispatch();
