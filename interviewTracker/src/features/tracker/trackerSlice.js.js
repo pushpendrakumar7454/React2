@@ -129,8 +129,39 @@ const initialState = {
 
 const trackerSlice = createSlice({
   name: "tracker",
+
   initialState,
-  reducers: {},
+
+  reducers: {
+    toggleTask: (state, action) => {
+      const { sectionId, taskId } = action.payload;
+
+      for (let i = 0; i < state.sections.length; i++) {
+        if (state.sections[i].id === sectionId) {
+          for (let j = 0; j < state.sections[i].tasks.length; j++) {
+            if (state.sections[i].tasks[j].id === taskId) {
+              state.sections[i].tasks[j].completed =
+                !state.sections[i].tasks[j].completed;
+
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+    },
+
+    resetProgress: (state) => {
+      for (let i = 0; i < state.sections.length; i++) {
+        for (let j = 0; j < state.sections[i].tasks.length; j++) {
+          state.sections[i].tasks[j].completed = false;
+        }
+      }
+    },
+  },
 });
+
+export const { toggleTask, resetProgress } = trackerSlice.actions;
 
 export default trackerSlice.reducer;
