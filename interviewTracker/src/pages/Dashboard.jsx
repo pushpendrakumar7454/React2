@@ -13,6 +13,7 @@ import {
   FiRotateCcw,
 } from "react-icons/fi";
 import { Link } from "react-router";
+
 import { resetProgress } from "../features/tracker/trackerSlice.js";
 
 const Dashboard = () => {
