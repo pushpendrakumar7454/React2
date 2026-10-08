@@ -8,7 +8,6 @@ const DSA = () => {
   const dispatch = useDispatch();
 
   const sections = useSelector((state) => state.tracker.sections);
-
   let dsaSection = null;
 
   for (let i = 0; i < sections.length; i++) {
