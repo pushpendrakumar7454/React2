@@ -11,6 +11,7 @@ import { Link } from "react-router";
 import { toggleTask } from "../features/tracker/trackerSlice.js";
 
 const FullStack = () => {
+    
   const dispatch = useDispatch();
 
   const sections = useSelector((state) => state.tracker.sections);
