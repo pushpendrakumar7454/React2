@@ -90,6 +90,7 @@ const DSA = () => {
           </div>
 
           {/* Progress Bar */}
+          
           <div className="mt-6">
             <div className="h-2 overflow-hidden rounded-full bg-slate-800">
               <div
