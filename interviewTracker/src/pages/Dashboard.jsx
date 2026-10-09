@@ -21,13 +21,11 @@ const Dashboard = () => {
 
   const sections = useSelector((state) => state.tracker.sections);
 
-  // Total tasks
+  
   let totalTasks = 0;
 
-  // Completed tasks
   let completedTasks = 0;
 
-  // Section progress
   for (let i = 0; i < sections.length; i++) {
     totalTasks = totalTasks + sections[i].tasks.length;
 
@@ -77,14 +75,14 @@ const Dashboard = () => {
                 </span>
               </div>
 
-              <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
                 Welcome to your{" "}
                 <span className="text-orange-500">
                   Interview Tracker
                 </span>
               </h1>
 
-              <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">
+              <p className="mt-2 max-w-xl text-[10px]  text-slate-400 sm:text-base">
                 Stay consistent, complete your weekly tasks and track
                 your interview preparation progress in one place.
               </p>
