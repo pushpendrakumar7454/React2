@@ -163,4 +163,5 @@ const trackerSlice = createSlice({
 });
 
 export const { toggleTask, resetProgress } = trackerSlice.actions;
+
 export default trackerSlice.reducer;
