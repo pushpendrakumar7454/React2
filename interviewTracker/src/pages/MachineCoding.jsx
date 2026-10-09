@@ -12,7 +12,6 @@ import { toggleTask } from "../features/tracker/trackerSlice.js";
 
 const MachineCoding = () => {
   const dispatch = useDispatch();
-
   const sections = useSelector((state) => state.tracker.sections);
 
   let machineSection = null;
