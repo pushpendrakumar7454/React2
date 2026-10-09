@@ -11,7 +11,6 @@ import { Link } from "react-router";
 import { toggleTask } from "../features/tracker/trackerSlice.js";
 
 const GitGithub = () => {
-    
   const dispatch = useDispatch();
 
   const sections = useSelector((state) => state.tracker.sections);
