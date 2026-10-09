@@ -53,7 +53,6 @@ const FullStack = () => {
   return (
     <div className="min-h-[calc(100vh-76px)] bg-slate-950 px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-4xl">
-
         {/* Back */}
         <Link
           to="/"
