@@ -9,10 +9,14 @@ const App = () => {
  const [task, setTask] = useState(()=>{
   return JSON.parse(localStorage.getItem("task"))||[]
  })
- 
+
+ const onDelete=(id)=>{
+  setTask((task)=>task.id!==id)
+ }
+
   return (
     <div>
-   {toggle?<Main setToggle={setToggle} task={task}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
+   {toggle?<Main setToggle={setToggle} task={task} onDelete={onDelete}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
     </div>
   )
 }
