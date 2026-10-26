@@ -9,7 +9,6 @@ const Header = () => {
           <div>
             <button className='bg-cyan-900 text-white p-2 rounded cursor-pointer active:scale-95'>Add Task</button>
           </div>
-      
     </div>
   )
 }
