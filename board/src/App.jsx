@@ -9,8 +9,7 @@ const App = () => {
  const [task, setTask] = useState([])
   return (
     <div>
-   {toggle?<Main setToggle={setToggle}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
-
+   {toggle?<Main setToggle={setToggle} task={task}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
     </div>
   )
 }
