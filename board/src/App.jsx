@@ -11,7 +11,7 @@ const App = () => {
  })
 
  const onDelete=(id)=>{
-  setTask((task)=>task.id!==id)
+  task.filter((task)=>task.id!==id)
  }
 
   return (
