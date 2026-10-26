@@ -1,38 +1,43 @@
-
-
 import { useForm } from "react-hook-form";
 
-const KanbanForm = ({setToggle,setTask}) => {
-
-
-   
+const KanbanForm = ({ setToggle, setTask }) => {
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
   } = useForm();
-
   const onSubmit = (data) => {
     console.log("Task Created:", data);
-    setTask((pre)=>[...pre,data])
-    setToggle(true)
+
+    const newTask = {
+      ...data,
+      id: Date.now(),
+      status: "To Do",
+    };
+
+    setTask((prev) => {
+      const updatedTask = [...prev, newTask];
+
+      localStorage.setItem("task", JSON.stringify(updatedTask));
+
+      return updatedTask;
+    });
+
+    setToggle(true);
     reset();
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-cyan-500 p-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl sm:p-8">
-
         {/* Heading */}
         <div className="mb-6">
           <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-cyan-600">
             Task Manager
           </p>
 
-          <h1 className="text-2xl font-bold text-gray-800">
-            Create New Task
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-800">Create New Task</h1>
 
           <p className="mt-2 text-sm text-gray-500">
             Fill in the details to add a new task.
@@ -40,10 +45,7 @@ const KanbanForm = ({setToggle,setTask}) => {
         </div>
 
         {/* Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-5"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Task Title */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -99,8 +101,7 @@ const KanbanForm = ({setToggle,setTask}) => {
               {...register("priority", {
                 required: "Please select priority",
               })}
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
-            >
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100">
               <option value="" disabled>
                 Select priority
               </option>
@@ -143,15 +144,13 @@ const KanbanForm = ({setToggle,setTask}) => {
             <button
               type="button"
               onClick={() => reset()}
-              className="w-1/2 rounded-lg border border-gray-300 px-4 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100"
-            >
+              className="w-1/2 rounded-lg border border-gray-300 px-4 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100">
               Reset
             </button>
 
             <button
               type="submit"
-              className="w-1/2 rounded-lg bg-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-cyan-600"
-            >
+              className="w-1/2 rounded-lg bg-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-cyan-600">
               + Add Task
             </button>
           </div>
