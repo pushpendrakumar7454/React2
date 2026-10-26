@@ -6,7 +6,7 @@ const Main = ({setToggle,task,onDelete}) => {
   return (
     <div>
       <Header setToggle={setToggle} onDelete={onDelete}/>
-      <Task task={task}/>
+      <Task task={task} onDelete={onDelete}/>
     </div>
   )
 }

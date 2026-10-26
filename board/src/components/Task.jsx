@@ -1,7 +1,7 @@
 
 import React from "react";
 
-const Task = ({ task}) => {
+const Task = ({ task,onDelete}) => {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 p-6">
       {task.map((item) => (
@@ -62,6 +62,7 @@ const Task = ({ task}) => {
 
             <button
               type="button"
+              onClick={()=>onDelete(task.id)}
            
               className="flex-1 rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-600"
             >

@@ -11,7 +11,12 @@ const App = () => {
  })
 
  const onDelete=(id)=>{
-  task.filter((task)=>task.id!==id)
+  setTask((prev)=>{
+    const updateData=prev.filter((t)=>t.id!==id)
+
+    localStorage.setItem("task", JSON.stringify(updateData));
+    return updateData
+  })
  }
 
   return (
