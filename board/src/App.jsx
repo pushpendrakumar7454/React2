@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import Header from './components/Header'
 import KanbanForm from './components/KanbasForm'
+import Main from './pages/Main'
 
 const App = () => {
 
- const [toggle, setToggle] = useState(false)
+ const [toggle, setToggle] = useState(true)
+ const [task, setTask] = useState([])
   return (
     <div>
-   {toggle?<Header/>:<KanbanForm/>}
+   {toggle?<Main setToggle={setToggle}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
+
     </div>
   )
 }

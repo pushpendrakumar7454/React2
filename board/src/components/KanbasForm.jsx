@@ -1,10 +1,27 @@
 
-import React from "react";
 
-const KanbanForm = () => {
+import { useForm } from "react-hook-form";
+
+const KanbanForm = ({setToggle,setTask}) => {
+
+
+   
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("Task Created:", data);
+    setTask((pre)=>[...pre,data])
+    setToggle(true)
+    reset();
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-cyan-500 p-4">
-
       <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl sm:p-8">
 
         {/* Heading */}
@@ -23,8 +40,10 @@ const KanbanForm = () => {
         </div>
 
         {/* Form */}
-        <form className="space-y-5">
-
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-5"
+        >
           {/* Task Title */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">
@@ -34,8 +53,17 @@ const KanbanForm = () => {
             <input
               type="text"
               placeholder="Enter task title"
+              {...register("title", {
+                required: "Task title is required",
+              })}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             />
+
+            {errors.title && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.title.message}
+              </p>
+            )}
           </div>
 
           {/* Description */}
@@ -47,8 +75,17 @@ const KanbanForm = () => {
             <textarea
               rows="4"
               placeholder="Describe your task..."
+              {...register("description", {
+                required: "Description is required",
+              })}
               className="w-full resize-none rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             />
+
+            {errors.description && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.description.message}
+              </p>
+            )}
           </div>
 
           {/* Priority */}
@@ -59,15 +96,25 @@ const KanbanForm = () => {
 
             <select
               defaultValue=""
+              {...register("priority", {
+                required: "Please select priority",
+              })}
               className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             >
               <option value="" disabled>
                 Select priority
               </option>
+
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+
+            {errors.priority && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.priority.message}
+              </p>
+            )}
           </div>
 
           {/* Due Date */}
@@ -78,18 +125,27 @@ const KanbanForm = () => {
 
             <input
               type="date"
+              {...register("dueDate", {
+                required: "Due date is required",
+              })}
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100"
             />
+
+            {errors.dueDate && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.dueDate.message}
+              </p>
+            )}
           </div>
 
           {/* Buttons */}
           <div className="flex gap-3 pt-2">
-
             <button
               type="button"
+              onClick={() => reset()}
               className="w-1/2 rounded-lg border border-gray-300 px-4 py-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100"
             >
-              Cancel
+              Reset
             </button>
 
             <button
@@ -98,9 +154,7 @@ const KanbanForm = () => {
             >
               + Add Task
             </button>
-
           </div>
-
         </form>
       </div>
     </div>
