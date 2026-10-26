@@ -6,7 +6,10 @@ import Main from './pages/Main'
 const App = () => {
 
  const [toggle, setToggle] = useState(true)
- const [task, setTask] = useState([])
+ const [task, setTask] = useState(()=>{
+  return JSON.parse(localStorage.getItem("task"))||[]
+ })
+ 
   return (
     <div>
    {toggle?<Main setToggle={setToggle} task={task}/>:<KanbanForm setToggle={setToggle} setTask={setTask}/>}
