@@ -1,13 +1,13 @@
 
 import TaskCard from "./TaskCard";
 
-export default function TaskColumn({
+const TaskColumn=({
   column,
   tasks,
   onEdit,
   onDelete,
   onStatusChange
-}) {
+})=> {
   const headerColors = {
     todo: "bg-slate-200",
     progress: "bg-blue-500",
@@ -55,3 +55,4 @@ export default function TaskColumn({
     </section>
   );
 }
+export default TaskColumn
