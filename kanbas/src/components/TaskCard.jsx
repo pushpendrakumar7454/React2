@@ -58,14 +58,14 @@ const TaskCard=({
       <div className="mt-4 flex items-center justify-end gap-2 border-t border-slate-100 pt-3">
         <button
           onClick={() => onEdit(task)}
-          className="rounded-lg px-3 py-2 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-50"
+          className="rounded-lg cursor-pointer active:scale-95 px-3 py-2 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-50"
         >
           Edit
         </button>
 
         <button
           onClick={() => onDelete(task.id)}
-          className="rounded-lg px-3 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-50"
+          className="rounded-lg cursor-pointer active:scale-95 px-3 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-50"
         >
           Delete
         </button>
