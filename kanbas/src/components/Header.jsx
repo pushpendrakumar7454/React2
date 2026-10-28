@@ -1,10 +1,10 @@
 
-const Header=()=>({
+const Header=({
   onAdd,
   search,
   setSearch,
   total
-}) {
+})=> {
   return (
     <header className="mb-7 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 
