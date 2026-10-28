@@ -1,5 +1,5 @@
 
-export default function Header({
+const Header({
   onAdd,
   search,
   setSearch,
@@ -100,3 +100,4 @@ export default function Header({
     </header>
   );
 }
+export default Header
