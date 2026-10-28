@@ -1,5 +1,5 @@
 
-const Header({
+const Header=()=>({
   onAdd,
   search,
   setSearch,
@@ -14,6 +14,7 @@ const Header({
         <div>
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1">
             <span className="h-2 w-2 rounded-full bg-indigo-600"></span>
+
             <span className="text-xs font-semibold tracking-wide text-indigo-700">
               WORKSPACE
             </span>
@@ -29,6 +30,7 @@ const Header({
         </div>
 
         <button
+          type="button"
           onClick={onAdd}
           className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-100 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-lg sm:self-auto"
         >
@@ -69,6 +71,7 @@ const Header({
 
         {/* Task Count */}
         <div className="flex items-center gap-3 self-start rounded-xl border border-slate-200 bg-white px-4 py-2.5 sm:self-auto">
+
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -90,14 +93,17 @@ const Header({
             <p className="text-lg font-bold leading-tight text-slate-900">
               {total}
             </p>
+
             <p className="mt-1 text-xs text-slate-500">
               {total === 1 ? "Total task" : "Total tasks"}
             </p>
           </div>
+
         </div>
 
       </div>
     </header>
   );
 }
-export default Header
+
+export default Header;
