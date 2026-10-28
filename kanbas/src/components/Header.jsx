@@ -32,7 +32,7 @@ const Header=({
         <button
           type="button"
           onClick={onAdd}
-          className="inline-flex items-center justify-center gap-2 self-start rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-100 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-lg sm:self-auto"
+          className="inline-flex cursor-pointer active:scale-95 items-center justify-center gap-2 self-start rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-100 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-700 hover:shadow-lg sm:self-auto"
         >
           <span className="text-lg leading-none">+</span>
           Add New Task
