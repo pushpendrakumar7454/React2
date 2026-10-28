@@ -11,12 +11,12 @@ const priorityColors = {
   Low: "bg-emerald-50 text-emerald-700"
 };
 
-export default function TaskCard({
+const TaskCard=({
   task,
   onEdit,
   onDelete,
   onStatusChange
-}) {
+})=> {
   return (
     <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
@@ -73,3 +73,5 @@ export default function TaskCard({
     </article>
   );
 }
+
+export default TaskCard;
