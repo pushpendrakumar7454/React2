@@ -168,14 +168,14 @@ const TaskForm=({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+            className="rounded-xl cursor-pointer active:scale-95 border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50"
           >
             Cancel
           </button>
 
           <button
             type="submit"
-            className="rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-700"
+            className="rounded-xl cursor-pointer active:scale-95 bg-indigo-600 px-3 py-1 text-sm font-semibold text-white hover:bg-indigo-700"
           >
             {task ? "Save Changes" : "Create Task"}
           </button>
