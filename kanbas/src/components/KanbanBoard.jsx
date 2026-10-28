@@ -19,13 +19,7 @@ const columns = [
   }
 ];
 
-export default function KanbanBoard({
-  tasks,
-  search,
-  onEdit,
-  onDelete,
-  onStatusChange
-}) {
+const  KanbanBoard=({tasks,search, onEdit, onDelete, onStatusChange})=> {
   return (
     <section className="grid grid-cols-1 items-start gap-5 md:grid-cols-2 xl:grid-cols-3">
       {columns.map((column) => {
@@ -57,3 +51,5 @@ export default function KanbanBoard({
     </section>
   );
 }
+
+export default KanbanBoard
