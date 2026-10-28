@@ -8,11 +8,11 @@ const emptyForm = {
   priority: "Medium"
 };
 
-export default function TaskForm({
+const TaskForm=({
   task,
   onSave,
   onClose
-}) {
+})=> {
   const [form, setForm] = useState(emptyForm);
   const [error, setError] = useState("");
 
@@ -184,3 +184,4 @@ export default function TaskForm({
     </div>
   );
 }
+export default TaskForm
